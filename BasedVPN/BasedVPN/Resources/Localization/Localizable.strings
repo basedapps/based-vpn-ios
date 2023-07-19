@@ -1,0 +1,21 @@
+/* 
+  Localizable.strings
+  BasedVPN
+
+  Created by Lika Vorobeva on 19.07.2023.
+  
+*/
+
+// MARK: - Home
+
+"Home.Connection.IP" = "YOUR IP ADDRESS";
+"Home.Connection.IP.Unknown" = "Unknown";
+"Home.Button.Connect" = "CONNECT TO VPN";
+"Home.Button.Disconnect" = "DISCONNECT";
+"Countries.Navigation" = "Choose Country";
+"Countries.Item.Servers" = "%d servers available";
+"Settings.Navigation" = "Settings";
+"Settings.DNS.Title" = "DNS Server";
+"Settings.DNS.Handshake" = "Handshake DNS";
+"Settings.DNS.Cloudflare" = "Cloudflare DNS";
+"Settings.DNS.Google" = "Google Public DNS";
