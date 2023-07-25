@@ -1,0 +1,40 @@
+{% include 'Header' %}
+
+import SwiftUI
+
+struct {{ module_info.name }}View: View {
+    @ObservedObject private var viewModel: {{ module_info.name }}ViewModel
+    
+    init(viewModel: {{ module_info.name }}ViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    var body: some View {
+       Text("{{ module_info.name }}")
+    }
+}
+
+// MARK: - {{ module_info.name }}View decomposition
+
+extension {{ module_info.name }}View {
+}
+
+// MARK: - Previews
+
+struct {{ module_info.name }}View_Previews: PreviewProvider {
+    static var previews: some View {
+        ModulesFactory.shared.get{{ module_info.name }}Scene().previewDevice("iPhone 14")
+    }
+}
+
+struct {{ module_info.name }}View_Previews_Pad: PreviewProvider {
+    static var previews: some View {
+        ModulesFactory.shared.get{{ module_info.name }}Scene().previewDevice("iPad Pro (12.9-inch) (6th generation)")
+    }
+}
+
+struct {{ module_info.name }}View_Previews_PadMini: PreviewProvider {
+    static var previews: some View {
+        ModulesFactory.shared.get{{ module_info.name }}Scene().previewDevice("iPad mini (6th generation)")
+    }
+}
