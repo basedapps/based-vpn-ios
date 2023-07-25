@@ -1,0 +1,9 @@
+/* 
+  Staging.strings
+  BasedVPN
+
+  Created by Lika Vorobeva on 21.07.2023.
+  
+*/
+
+"Backend URL" = "https://vpn-api-staging.basedapps.co.uk";
