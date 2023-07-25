@@ -2,7 +2,7 @@
 //  UIColor+SwiftUI.swift
 //  BaseVPN
 //
-//  Created by Victoria Kostyleva on 25.11.2021.
+//  Created by Lika Vorobeva on 25.11.2021.
 //
 
 import UIKit

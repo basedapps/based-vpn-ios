@@ -7,6 +7,16 @@
 
 import SwiftUI
 
+// MARK: - Toast
+
+extension View {
+    func toast(message: String, isShowing: Binding<Bool>, type: Toast.Style = .error) -> some View {
+        self.modifier(Toast(message: message, config: type.config, isShowing: isShowing))
+    }
+}
+
+// MARK: - isHidden
+
 extension View {
     @ViewBuilder func isHidden(_ hidden: Bool, remove: Bool = false) -> some View {
         if hidden {
@@ -18,6 +28,8 @@ extension View {
         }
     }
 }
+
+// MARK: - RoundedCorner
 
 struct RoundedCorner: Shape {
     var radius: CGFloat = .infinity

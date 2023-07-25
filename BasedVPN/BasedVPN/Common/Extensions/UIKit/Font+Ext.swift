@@ -1,6 +1,6 @@
 //
 //  Font+Ext.swift
-//  SOLAR dVPN
+//  BaseVPN
 //
 //  Created by Lika Vorobeva on 29.11.2021.
 //
