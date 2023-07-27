@@ -27,7 +27,7 @@ final class DefaultConnectionAPIService: ConnectionAPIService {
     }
 
     func fetchIP() async throws -> IPResponse {
-        try await session.request(request(for: .ip))
+        try await session.request(request(for: .ip, timeoutInterval: 3))
             .validate()
             .serializingDecodable(DataResponse<IPResponse>.self)
             .handlingError()
@@ -36,7 +36,7 @@ final class DefaultConnectionAPIService: ConnectionAPIService {
 
     func fetchCredentials(for city: City) async throws -> ConnectionCredentials {
         try await session
-            .request(request(for: .credentials(city)))
+            .request(request(for: .credentials(city), timeoutInterval: 120))
             .validate()
             .serializingDecodable(DataResponse<ConnectionCredentials>.self)
             .handlingError()
@@ -47,7 +47,7 @@ final class DefaultConnectionAPIService: ConnectionAPIService {
 // MARK: - Private
 
 private extension DefaultConnectionAPIService {
-    func request(for target: ConnectionAPITarget) -> APIRequest {
-        .init(baseURL: ApplicationConfiguration.shared.backendURL, target: target)
+    func request(for target: ConnectionAPITarget, timeoutInterval: TimeInterval) -> APIRequest {
+        .init(baseURL: ApplicationConfiguration.shared.backendURL, target: target, timeoutInterval: timeoutInterval)
     }
 }

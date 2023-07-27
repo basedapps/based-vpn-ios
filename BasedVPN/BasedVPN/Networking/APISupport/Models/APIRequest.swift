@@ -13,7 +13,7 @@ struct APIRequest: URLRequestConvertible {
     let target: APITarget
     let timeoutInterval: TimeInterval
 
-    init(baseURL: URL, target: APITarget, timeoutInterval: TimeInterval = 30) {
+    init(baseURL: URL, target: APITarget, timeoutInterval: TimeInterval = 15) {
         self.baseURL = baseURL
         self.target = target
         self.timeoutInterval = timeoutInterval
