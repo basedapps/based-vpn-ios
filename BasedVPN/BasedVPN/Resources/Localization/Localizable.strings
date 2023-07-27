@@ -10,6 +10,7 @@
 
 "Home.Connection.IP" = "YOUR IP ADDRESS";
 "Home.Connection.IP.Unknown" = "Unknown";
+"Home.Connection.IP.Error" = "Your connection appears to be unstable or offline";
 "Home.Button.Connect" = "CONNECT TO VPN";
 "Home.Button.Countries" = "Select a server";
 "Home.Button.Disconnect" = "DISCONNECT";

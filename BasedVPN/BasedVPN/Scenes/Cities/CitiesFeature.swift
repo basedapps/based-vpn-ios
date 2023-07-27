@@ -39,6 +39,7 @@ extension CitiesFeature: ReducerProtocol {
                 state.viewState = .loaded(.init(.init(uniqueElements: rowStates)))
 
             case let .fetchCitiesResponse(.failure(error)):
+                log.error(error)
                 state.isLoading = false
                 state.viewState = .failed(CountryError.underlying(error))
 

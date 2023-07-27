@@ -30,22 +30,21 @@ struct Toast: ViewModifier {
 extension Toast {
     private var toastView: some View {
         VStack {
-            if isShowing {
-                Group {
-                    Text(message)
-                        .applyTextStyle(config.textStyle)
-                        .multilineTextAlignment(.center)
-                        .padding(8)
-                }
+            message
+                .asText
+                .applyTextStyle(config.textStyle)
+                .multilineTextAlignment(.center)
+                .padding(8)
                 .background(config.backgroundColor)
                 .cornerRadius(8)
+                .frame(maxWidth: 250)
                 .onTapGesture { isShowing = false }
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + config.duration) {
                         isShowing = false
                     }
                 }
-            }
+                .isHidden(!isShowing)
 
             Spacer()
         }
@@ -60,10 +59,10 @@ extension Toast {
 
 extension Toast {
     struct Config {
-        static let short: TimeInterval = 2
-        static let long: TimeInterval = 3.5
+        static let short: TimeInterval = 3
+        static let long: TimeInterval = 5
 
-        let  textStyle: TextStyle
+        let textStyle: TextStyle
         let backgroundColor: Color
         let duration: TimeInterval
         let transition: AnyTransition
@@ -91,9 +90,9 @@ extension Toast {
         var config: Config {
             switch self {
             case .error:
-                return .init(backgroundColor: Colors.coral.asColor.opacity(0.6))
+                return .init(backgroundColor: Colors.coral.asColor)
             case .info:
-                return  .init(backgroundColor: Colors.accentBlue.asColor.opacity(0.6))
+                return  .init(backgroundColor: Colors.accentBlue.asColor)
             }
         }
     }

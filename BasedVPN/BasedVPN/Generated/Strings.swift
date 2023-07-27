@@ -72,6 +72,8 @@ internal enum L10n {
       ///   Created by Lika Vorobeva on 19.07.2023.
       internal static let ip = L10n.tr("Localizable", "Home.Connection.IP", fallback: "YOUR IP ADDRESS")
       internal enum Ip {
+        /// Your connection appears to be unstable or offline
+        internal static let error = L10n.tr("Localizable", "Home.Connection.IP.Error", fallback: "Your connection appears to be unstable or offline")
         /// Unknown
         internal static let unknown = L10n.tr("Localizable", "Home.Connection.IP.Unknown", fallback: "Unknown")
       }
