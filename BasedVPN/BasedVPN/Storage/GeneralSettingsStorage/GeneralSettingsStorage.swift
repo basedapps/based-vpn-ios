@@ -11,6 +11,7 @@ import ComposableArchitecture
 
 private enum Keys: String, CaseIterable {
     case dnsKey
+    case city
 }
 
 final class GeneralSettingsStorage {
@@ -28,22 +29,26 @@ extension GeneralSettingsStorage: StoresGeneralInfo { }
 // MARK: - StoresTunnelsInfo
 
 extension GeneralSettingsStorage: StoresTunnelsInfo {
-    func set(dns: DNSServerType) {
-        settingsStorageStrategy.setObject(dns.rawValue, forKey: Keys.dnsKey.rawValue)
-    }
-    
     var selectedDNS: DNSServerType {
-        guard let rawValue = settingsStorageStrategy.object(ofType: String.self, forKey: Keys.dnsKey.rawValue) else {
-            return .default
+        get {
+            settingsStorageStrategy.object(ofType: DNSServerType.self, forKey: Keys.dnsKey.rawValue) ?? .default
         }
-        
-        guard let server = DNSServerType(rawValue: rawValue) else {
-            return .default
+        set {
+            settingsStorageStrategy.setObject(newValue, forKey: Keys.dnsKey.rawValue)
         }
-        
-        return server
+    }
+
+    var city: City? {
+        get {
+            settingsStorageStrategy.object(ofType: City.self, forKey: Keys.city.rawValue)
+        }
+        set {
+            settingsStorageStrategy.setObject(newValue, forKey: Keys.city.rawValue)
+        }
     }
 }
+
+// MARK: - DependencyKey
 
 extension GeneralSettingsStorage: DependencyKey {
     static var liveValue = GeneralSettingsStorage.live
