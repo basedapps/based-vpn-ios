@@ -8,6 +8,6 @@
 import Foundation
 
 protocol StoresTunnelsInfo {
-    func set(dns: DNSServerType)
-    var selectedDNS: DNSServerType { get }
+    var selectedDNS: DNSServerType { get set }
+    var city: City? { get set }
 }

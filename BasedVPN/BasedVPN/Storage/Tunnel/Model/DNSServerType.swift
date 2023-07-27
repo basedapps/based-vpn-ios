@@ -9,6 +9,8 @@ import SwiftUI
 
 private typealias Base = L10n.Settings.Dns
 
+// MARK: - DNSServerType
+
 enum DNSServerType: String, CaseIterable {
     case handshake
     case google
@@ -33,6 +35,12 @@ enum DNSServerType: String, CaseIterable {
         return .handshake
     }
 }
+
+// MARK: - Codable
+
+extension DNSServerType: Codable {}
+
+// MARK: - CustomStringConvertible
 
 extension DNSServerType: CustomStringConvertible {
     var description: String {
