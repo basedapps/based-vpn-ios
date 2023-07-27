@@ -7,12 +7,14 @@
 
 import Foundation
 
-struct Country: Decodable, Equatable, Hashable {
+struct Country: Equatable, Hashable {
     let id: Int
     let name: String
     let code: String
     let serversAvailable: Int
+}
 
+extension Country: Codable {
     enum CodingKeys: String, CodingKey {
         case id
         case name

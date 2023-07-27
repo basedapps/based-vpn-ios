@@ -33,6 +33,7 @@ enum CommonAPIError: String, LocalizedError {
     case notFound
     case unauthorizedDevice
     case temporaryUnavailable
+    case serverUnavailable
 
     var errorDescription: String? {
         switch self {
@@ -46,6 +47,8 @@ enum CommonAPIError: String, LocalizedError {
             return Base.unauthorizedDevice
         case .temporaryUnavailable:
             return Base.temporaryUnavailable
+        case .serverUnavailable:
+            return Base.serverUnavailable
         }
     }
 
@@ -57,6 +60,8 @@ enum CommonAPIError: String, LocalizedError {
             self = .unauthorizedDevice
         case 404:
             self = .notFound
+        case 410:
+            self = .serverUnavailable
         case 500...511:
             self = .temporaryUnavailable
         default:
