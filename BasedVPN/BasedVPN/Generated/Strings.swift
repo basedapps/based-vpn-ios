@@ -20,10 +20,48 @@ internal enum L10n {
       }
     }
   }
+  internal enum Error {
+    /// Something is missing. Try in 15 minutes or contact support.
+    internal static let invalidRequest = L10n.tr("Localizable", "Error.InvalidRequest", fallback: "Something is missing. Try in 15 minutes or contact support.")
+    /// Requested resource cannot be found on the server
+    internal static let notFound = L10n.tr("Localizable", "Error.NotFound", fallback: "Requested resource cannot be found on the server")
+    /// Retry
+    internal static let retry = L10n.tr("Localizable", "Error.Retry", fallback: "Retry")
+    /// Select server is unavailable.
+    internal static let serverUnavailable = L10n.tr("Localizable", "Error.ServerUnavailable", fallback: "Select server is unavailable.")
+    /// Action is temporary unavailable. Try in 15 minutes or contact support.
+    internal static let temporaryUnavailable = L10n.tr("Localizable", "Error.TemporaryUnavailable", fallback: "Action is temporary unavailable. Try in 15 minutes or contact support.")
+    /// Please allow the tunnel creation to connect to your session
+    internal static let tunnelCreationDenied = L10n.tr("Localizable", "Error.TunnelCreationDenied", fallback: "Please allow the tunnel creation to connect to your session")
+    /// Failed to create a tunnel. Make sure you allow tunnel creation.
+    internal static let tunnelCreationFailed = L10n.tr("Localizable", "Error.TunnelCreationFailed", fallback: "Failed to create a tunnel. Make sure you allow tunnel creation.")
+    /// Your session’s expired. Please, retry again or restart the app.
+    internal static let unauthorizedDevice = L10n.tr("Localizable", "Error.UnauthorizedDevice", fallback: "Your session’s expired. Please, retry again or restart the app.")
+    /// Something went wrong.
+    internal static let unknownError = L10n.tr("Localizable", "Error.UnknownError", fallback: "Something went wrong.")
+  }
+  internal enum ErrorState {
+    internal enum Empty {
+      /// No Results Found.
+      internal static let description = L10n.tr("Localizable", "ErrorState.Empty.Description", fallback: "No Results Found.")
+      /// Sorry!
+      internal static let title = L10n.tr("Localizable", "ErrorState.Empty.Title", fallback: "Sorry!")
+    }
+    internal enum Failure {
+      /// Retry
+      internal static let button = L10n.tr("Localizable", "ErrorState.Failure.Button", fallback: "Retry")
+      /// Failed to fetch data from the server.
+      internal static let description = L10n.tr("Localizable", "ErrorState.Failure.Description", fallback: "Failed to fetch data from the server.")
+      /// Ugh-oh! Something Went Wrong!
+      internal static let title = L10n.tr("Localizable", "ErrorState.Failure.Title", fallback: "Ugh-oh! Something Went Wrong!")
+    }
+  }
   internal enum Home {
     internal enum Button {
       /// CONNECT TO VPN
       internal static let connect = L10n.tr("Localizable", "Home.Button.Connect", fallback: "CONNECT TO VPN")
+      /// Select a server
+      internal static let countries = L10n.tr("Localizable", "Home.Button.Countries", fallback: "Select a server")
       /// DISCONNECT
       internal static let disconnect = L10n.tr("Localizable", "Home.Button.Disconnect", fallback: "DISCONNECT")
     }

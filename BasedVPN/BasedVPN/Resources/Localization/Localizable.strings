@@ -11,11 +11,39 @@
 "Home.Connection.IP" = "YOUR IP ADDRESS";
 "Home.Connection.IP.Unknown" = "Unknown";
 "Home.Button.Connect" = "CONNECT TO VPN";
+"Home.Button.Countries" = "Select a server";
 "Home.Button.Disconnect" = "DISCONNECT";
+
+// MARK: - Countries
+
 "Countries.Navigation" = "Choose Country";
 "Countries.Item.Servers" = "%d servers available";
+
+// MARK: - Settings
+
 "Settings.Navigation" = "Settings";
 "Settings.DNS.Title" = "DNS Server";
 "Settings.DNS.Handshake" = "Handshake DNS";
 "Settings.DNS.Cloudflare" = "Cloudflare DNS";
 "Settings.DNS.Google" = "Google Public DNS";
+
+// MARK: - Common Errors
+
+"Error.UnknownError" = "Something went wrong.";
+"Error.TemporaryUnavailable" = "Action is temporary unavailable. Try in 15 minutes or contact support.";
+"Error.InvalidRequest" = "Something is missing. Try in 15 minutes or contact support.";
+"Error.NotFound" = "Requested resource cannot be found on the server";
+"Error.UnauthorizedDevice" = "Your session’s expired. Please, retry again or restart the app.";
+"Error.Retry" = "Retry";
+"Error.TunnelCreationDenied" = "Please allow the tunnel creation to connect to your session";
+"Error.TunnelCreationFailed" = "Failed to create a tunnel. Make sure you allow tunnel creation.";
+"Error.ServerUnavailable" = "Select server is unavailable.";
+
+// MARK: - ErrorState
+
+"ErrorState.Failure.Title" = "Ugh-oh! Something Went Wrong!";
+"ErrorState.Failure.Description" = "Failed to fetch data from the server.";
+"ErrorState.Failure.Button" = "Retry";
+
+"ErrorState.Empty.Title" = "Sorry!";
+"ErrorState.Empty.Description" = "No Results Found.";
