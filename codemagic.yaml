@@ -1,0 +1,50 @@
+workflows:
+    ios-workflow:
+      name: iOS Build
+      integrations:
+        app_store_connect: basedapps_apple_app_store_api_key
+      environment:
+        ios_signing:
+          provisioning_profiles:
+            - co.uk.basedapps.vpn_apple_distribution_profile
+            - co.uk.basedapps.vpn.v2ray-ne_apple_distribution_profile
+            - co.uk.basedapps.vpn.v2ray-ne_apple_distribution_profile
+          certificates:
+            - basedapps_apple_distribution_certificate
+        vars:
+          XCODE_PROJECT: "BasedVPN/BasedVPN.xcodeproj"
+          XCODE_SCHEME: "BasedVPN"
+          BUNDLE_ID: "co.uk.basedapps.vpn"
+          APP_STORE_APP_ID: 6458188692
+        xcode: 14.3
+        cocoapods: default
+      triggering:
+        events:
+          - push
+        branch_patterns:
+          - pattern: 'main'
+            include: true
+            source: true
+      scripts:
+        - name: Set up code signing settings on Xcode project
+          script: |
+            xcode-project use-profiles
+        - name: Increment build number
+          script: |
+            #!/bin/sh
+            set -e
+            set -x
+            cd $FCI_BUILD_DIR/BasedVPN
+            # agvtool new-version -all $(($BUILD_NUMBER + 1))
+            agvtool new-version -all $(($(app-store-connect get-latest-testflight-build-number "$APP_STORE_APP_ID") + 1))
+        - name: Build ipa for distribution
+          script: |
+            xcode-project build-ipa --project "$XCODE_PROJECT" --scheme "$XCODE_SCHEME"
+      artifacts:
+        - build/ios/ipa/*.ipa
+        - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+      publishing:
+        app_store_connect:           
+            auth: integration
+            submit_to_testflight: true
+
