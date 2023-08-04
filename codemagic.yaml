@@ -8,7 +8,7 @@ workflows:
           provisioning_profiles:
             - co.uk.basedapps.vpn_apple_distribution_profile
             - co.uk.basedapps.vpn.v2ray-ne_apple_distribution_profile
-            - co.uk.basedapps.vpn.v2ray-ne_apple_distribution_profile
+            - co.uk.basedapps.vpn.wireguard-ne_apple_distribution_profile
           certificates:
             - basedapps_apple_distribution_certificate
         vars:
