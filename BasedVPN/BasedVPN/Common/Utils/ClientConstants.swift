@@ -8,6 +8,5 @@
 import Foundation
 
 enum ClientConstants {
-    static let keyName = "Base VPN"
-    static let xRayKey = "BaseRay"
+    static let xRayKey = "BasedVPN - V2Ray"
 }

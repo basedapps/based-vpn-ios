@@ -39,8 +39,8 @@ final class Keychain {
             log.error("Unable to determine bundle identifier")
             return nil
         }
-        if bundleIdentifier.hasSuffix(".WireGuardExtension") {
-            bundleIdentifier.removeLast(".WireGuardExtension".count)
+        if bundleIdentifier.hasSuffix(".wireguard-ne") {
+            bundleIdentifier.removeLast(".wireguard-ne".count)
         }
         let itemLabel = "Tunnel: \(name)"
         var items: [CFString: Any] = [

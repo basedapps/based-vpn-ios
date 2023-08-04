@@ -17,6 +17,6 @@ extension Bundle {
     }
 
     public static var providerBundleIdentifier: String {
-        "co.uk.basedapps.vpn.V2RayExtension"
+        "co.uk.basedapps.vpn.v2ray-ne"
     }
 }

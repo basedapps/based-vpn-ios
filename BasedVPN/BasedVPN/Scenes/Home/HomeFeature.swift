@@ -138,7 +138,6 @@ struct HomeFeature: ReducerProtocol {
                 state.destination = .countries(CountriesFeature.State(viewState: .loading, isLoading: true))
 
             case .didShowError:
-                state.isLoading = false
                 state.error = ""
 
             default:
@@ -158,6 +157,7 @@ private extension HomeFeature {
         case let .didFail(connectionError):
             log.error(connectionError)
             state.error = connectionError.localizedDescription
+            state.isLoading = false
         case .didLoad:
             state.isLoading = false
             return .send(.fetchIP)

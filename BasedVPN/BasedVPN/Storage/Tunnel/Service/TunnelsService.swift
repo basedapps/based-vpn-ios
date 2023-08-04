@@ -59,7 +59,7 @@ final public class TunnelsService {
                 return
             }
 
-            if managers.first?.provider?.providerBundleIdentifier == "co.uk.basedapps.vpn.V2RayExtension" {
+            if managers.first?.provider?.providerBundleIdentifier == "co.uk.basedapps.vpn.v2ray-ne" {
                 completionHandler(.success(TunnelsService(tunnelProviders: managers)))
             } else {
                 createWireGuard(managers: managers, completionHandler: completionHandler)

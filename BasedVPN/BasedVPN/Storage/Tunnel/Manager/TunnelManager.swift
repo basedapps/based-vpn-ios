@@ -14,7 +14,7 @@ import ComposableArchitecture
 private struct Constants {
     let persistentKeepAlive = "25"
     let allowedIPs = "0.0.0.0/0"
-    let wiregaurdTunnelName = "BaseVPN"
+    let wireguardTunnelName = "BasedVPN — WireGuard"
 
     let protocolType = URL(string: "vmess://")!
 }
@@ -171,7 +171,7 @@ extension TunnelManager {
     }
 
     private func prepareTunnelModel() {
-        tunnelModel.interfaceModel[.name] = constants.wiregaurdTunnelName
+        tunnelModel.interfaceModel[.name] = constants.wireguardTunnelName
         if tunnelModel.peersModel.isEmpty {
             tunnelModel.appendEmptyPeer()
         }

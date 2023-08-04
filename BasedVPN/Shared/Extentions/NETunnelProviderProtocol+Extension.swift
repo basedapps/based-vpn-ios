@@ -18,7 +18,7 @@ extension NETunnelProviderProtocol {
     convenience init?(tunnelConfiguration: TunnelConfiguration, previouslyFrom old: NEVPNProtocol? = nil) {
         self.init()
         guard let name = tunnelConfiguration.name, let bundleIdentifier = Bundle.main.bundleIdentifier else { return nil }
-        providerBundleIdentifier = bundleIdentifier + ".WireGuardExtension"
+        providerBundleIdentifier = bundleIdentifier + ".wireguard-ne"
 
         passwordReference = Keychain.makeReference(
             containing: tunnelConfiguration.asWireGuardConfig(),
