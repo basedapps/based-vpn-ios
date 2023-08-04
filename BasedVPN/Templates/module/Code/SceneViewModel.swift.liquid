@@ -1,0 +1,23 @@
+{% include 'Header' %}
+
+import UIKit
+import Combine
+
+final class {{ module_info.name }}ViewModel: ObservableObject {
+    typealias Router = AnyRouter<Route>
+    private let router: Router
+
+    typealias Context = NoContext
+    private let context: Context
+
+    enum Route {
+    }
+
+    init(context: Context, router: Router) {
+        self.context = context
+        self.router = router
+    }
+}
+
+extension {{ module_info.name }}ViewModel {
+}

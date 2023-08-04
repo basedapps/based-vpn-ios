@@ -1,0 +1,40 @@
+{% include 'Header' %}
+
+import UIKit
+import SwiftUI
+
+final class {{ module_info.name }}Coordinator: CoordinatorType {	
+    typealias Context = {{ module_info.name }}ViewModel.Context
+    private let context: Context
+
+    private weak var navigation: UINavigationController?
+
+    init(context: Context, navigation: UINavigationController) {
+        self.context = context
+        self.navigation = navigation
+    }
+}
+
+// MARK: - Module creation
+
+extension {{ module_info.name }}Coordinator {
+    func start() {
+        let viewModel = {{ module_info.name }}ViewModel(context: context, router: asRouter())
+        let view = {{ module_info.name }}View(viewModel: viewModel)
+        let controller = UIHostingController(rootView: view)
+
+        controller.makeNavigationBar(hidden: false, animated: false, style: .white)
+
+        navigation?.present(controller, animated: false)
+    }
+}
+
+// MARK: - RouterType implementation
+
+extension {{ module_info.name }}Coordinator: RouterType {
+    func play(event: {{ module_info.name }}ViewModel.Route) {
+        switch event {
+            // Handle events here.
+        }
+    }
+}

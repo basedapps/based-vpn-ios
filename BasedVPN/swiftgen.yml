@@ -1,0 +1,17 @@
+strings:
+  inputs: BasedVPN/Resources/Localization/Localizable.strings
+  outputs:
+      templateName: structured-swift5
+      output: BasedVPN/Generated/Strings.swift
+
+xcassets:
+  - inputs: BasedVPN/Resources/Assets.xcassets
+    outputs:
+        templateName: swift4
+        output: BasedVPN/Generated/Assets.swift
+
+fonts:
+    inputs: BasedVPN/Resources/Fonts
+    outputs:
+        templateName: swift5
+        output: BasedVPN/Generated/Fonts.swift
