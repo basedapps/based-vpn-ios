@@ -7,8 +7,8 @@
 import Foundation
 import ComposableArchitecture
 
-struct HomeFeature: ReducerProtocol {
-    struct Destination: ReducerProtocol {
+struct HomeFeature: Reducer {
+    struct Destination: Reducer {
         public enum State: Equatable {
             case settings(SettingsFeature.State)
             case countries(CountriesFeature.State)
@@ -19,7 +19,7 @@ struct HomeFeature: ReducerProtocol {
             case countries(CountriesFeature.Action)
         }
 
-        public var body: some ReducerProtocol<State, Action> {
+        public var body: some Reducer<State, Action> {
             Scope(state: /State.settings, action: /Action.settings) {
                 SettingsFeature()
             }
@@ -67,7 +67,7 @@ struct HomeFeature: ReducerProtocol {
     @Dependency(\.generalSettingsStorage) var generalSettingsStorage
     @Dependency(\.tunnelManagerSubscriber) var tunnelManagerSubscriber
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .loaded:
@@ -85,10 +85,8 @@ struct HomeFeature: ReducerProtocol {
                 return .send(.fetchIP)
 
             case .fetchIP:
-                return .task(operation: {
-                    await .ipResponse(TaskResult {
-                        try await connectionClient.fetchLocation()
-                    })
+                return .run(operation: { send in
+                    await send(.ipResponse(TaskResult { try await connectionClient.fetchLocation() }))
                 })
 
             case let .ipResponse(.success(location)):
@@ -126,10 +124,8 @@ struct HomeFeature: ReducerProtocol {
                 }
                 guard let city = state.selectedCity else { return .send(.showCountries) }
                 state.isLoading = true
-                return .task(operation: {
-                    await .connectionResponse(TaskResult {
-                        try await connectionClient.fetchCredentials(city)
-                    })
+                return .run(operation: { send in
+                    await send(.connectionResponse(TaskResult { try await connectionClient.fetchCredentials(city) }))
                 })
 
             case .showSettings:
@@ -152,7 +148,7 @@ struct HomeFeature: ReducerProtocol {
 }
 
 private extension HomeFeature {
-    func handle(action: TunnelManagerSubscriber.Action, for state: inout State) -> EffectTask<Action> {
+    func handle(action: TunnelManagerSubscriber.Action, for state: inout State) -> Effect<Action> {
         switch action {
         case let .didFail(connectionError):
             log.error(connectionError)

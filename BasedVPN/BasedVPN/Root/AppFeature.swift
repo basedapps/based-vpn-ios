@@ -7,7 +7,7 @@
 import ComposableArchitecture
 import UIKit
 
-struct AppFeature: ReducerProtocol {
+struct AppFeature: Reducer {
     struct State: Equatable {
         var viewState: ViewState<HomeFeature.State, ConnectionError>
         var homeState: HomeFeature.State
@@ -21,7 +21,7 @@ struct AppFeature: ReducerProtocol {
 
     @Dependency(\.deviceClient) var deviceClient
 
-    var body: some ReducerProtocol<State, Action> {
+    var body: some Reducer<State, Action> {
         Scope(state: \.homeState, action: /Action.home) {
             HomeFeature()
         }
@@ -29,10 +29,8 @@ struct AppFeature: ReducerProtocol {
             switch action {
             case .onAppear:
                 Config.setup()
-                return .task(operation: {
-                    await .fetchTokenResponse(TaskResult {
-                        try await deviceClient.storeTokenIfNeeded()
-                    })
+                return .run(operation: { send in
+                    await send(.fetchTokenResponse(TaskResult { try await deviceClient.storeTokenIfNeeded() }))
                 })
 
             case .fetchTokenResponse(.success):
@@ -50,14 +48,3 @@ struct AppFeature: ReducerProtocol {
         }
     }
 }
-
-//struct AppEnvironment {
-//    var exampleManager: ExampleManager
-//
-//    init(exampleManager: ExampleManager) {
-//        self.exampleManager = exampleManager
-//    }
-//}
-//
-//
-//let enviroment = AppEnvironment()

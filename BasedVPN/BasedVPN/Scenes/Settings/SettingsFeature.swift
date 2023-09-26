@@ -19,8 +19,8 @@ struct SettingsFeature {
     @Dependency(\.generalSettingsStorage) var generalSettingsStorage
 }
 
-extension SettingsFeature: ReducerProtocol {
-    var body: some ReducerProtocol<State, Action> {
+extension SettingsFeature: Reducer {
+    var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case let .changed(server):

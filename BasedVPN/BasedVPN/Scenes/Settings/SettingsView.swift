@@ -54,7 +54,7 @@ extension SettingsView {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        let store = Store(initialState: SettingsFeature.State(server: .cloudflare), reducer: SettingsFeature())
+        let store = Store(initialState: SettingsFeature.State(server: .cloudflare)) { SettingsFeature() }
         return SettingsView(store: store)
     }
 }

@@ -105,10 +105,6 @@ extension TunnelManager: TunnelManagerType {
 // MARK: - Wireguard
 
 extension TunnelManager {
-    func startTest() {
-        delegate?.handleTunnelUpdatingStatus()
-    }
-    
     func startWireguard(from credentials: ConnectionCredentials) -> TunnelsServiceError? {
         delegate?.handleTunnelUpdatingStatus()
         
