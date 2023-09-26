@@ -1,9 +1,0 @@
-# Template information section
-name: scene
-summary: An MVVM-based subview with a view model, and a view.
-version: 1.0.0
-
-# The declarations for code files.
-code_files:
-- {name: View.swift, path: Code/SceneView.swift.liquid}
-- {name: ViewModel.swift, path: Code/SceneViewModel.swift.liquid}
