@@ -10,7 +10,7 @@ import UniformTypeIdentifiers
 
 @frozen
 public enum XConstant {
-    public static let suiteName = "group.co.uk.basedapps.vpn.BasedVPN"
+    public static let suiteName = "group.co.uk.basedapps.vpn"
     
     private static func createDirectory(at url: URL) -> URL {
         guard FileManager.default.fileExists(atPath: url.path) == false else {

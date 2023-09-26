@@ -9,7 +9,7 @@ import Foundation
 
 extension Bundle {
     public static var appID: String {
-        "co.uk.basedapps.vpn.BasedVPN"
+        "co.uk.basedapps.vpn"
     }
 
     public static var appVersion: String {
