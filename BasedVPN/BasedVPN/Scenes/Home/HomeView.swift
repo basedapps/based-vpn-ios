@@ -38,6 +38,9 @@ struct HomeView: View {
                 contentView(for: viewStore)
             }
             .onAppear { viewStore.send(.onAppear) }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { notification in
+                viewStore.send(.onAppear)
+            }
             .navigationDestination(
                 store: store.scope(state: \.$destination, action: { .destination($0) }),
                 state: /HomeFeature.Destination.State.settings,

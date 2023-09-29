@@ -82,7 +82,13 @@ struct HomeFeature: Reducer {
                                .map(HomeFeature.Action.tunnel)
                 )
             case .onAppear:
-                return .send(.fetchIP)
+                return .merge(
+                    .send(.fetchIP),
+
+                    tunnelManagerSubscriber
+                        .getVPNStatus()
+                        .map(HomeFeature.Action.tunnel)
+                )
 
             case .fetchIP:
                 return .run(operation: { send in
