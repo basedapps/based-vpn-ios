@@ -59,6 +59,10 @@ struct AppFeature: Reducer {
                     state.viewState = .failed(.banned)
                     return .none
                 }
+                if let commonError = (error as? GenericNetworkError)?.commonError, commonError == .deviceBanned {
+                    state.viewState = .failed(.banned)
+                    return .none
+                }
                 state.viewState = .failed(.underlying(error))
                 
             case .deviceBanned:
