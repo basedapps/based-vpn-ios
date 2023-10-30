@@ -10,6 +10,7 @@ import ComposableArchitecture
 
 struct DeviceClient {
     var storeTokenIfNeeded: () async throws -> Void
+    var verifyDevice: () async throws -> Bool
 }
 
 private enum DeviceClientKey: DependencyKey {
@@ -36,6 +37,11 @@ extension DeviceClient {
                     log.error(error)
                     throw error
                 }
+            },
+            verifyDevice: {
+                let response = try await service.verifyDevice()
+                guard !response.isBanned else { throw ConnectionError.banned }
+                return response.isEnrolled
             }
         )
     }

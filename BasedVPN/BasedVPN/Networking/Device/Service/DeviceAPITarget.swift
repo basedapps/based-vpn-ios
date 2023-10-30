@@ -10,6 +10,7 @@ import Alamofire
 
 enum DeviceAPITarget {
     case registerDevice(RegisterDeviceRequest)
+    case getDevice
 }
 
 extension DeviceAPITarget: APITarget {
@@ -17,12 +18,16 @@ extension DeviceAPITarget: APITarget {
         switch self {
         case .registerDevice:
             return .post
+        case .getDevice:
+            return .get
         }
     }
 
     var path: String {
         switch self {
         case .registerDevice:
+            return "/device"
+        case .getDevice:
             return "/device"
         }
     }
@@ -31,6 +36,9 @@ extension DeviceAPITarget: APITarget {
         switch self {
         case let .registerDevice(request):
             return .requestJSONEncodable(request)
+        case .getDevice:
+            return .requestPlain
         }
     }
 }
+

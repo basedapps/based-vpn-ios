@@ -10,6 +10,10 @@ extension AppView.Action {
         switch self {
         case .onAppear:
             return .onAppear
+        case .deviceBanned:
+            return .deviceBanned
+        case .deviceNotEnrolled:
+            return .deviceNotEnrolled
         }
     }
 }

@@ -9,6 +9,8 @@ import Foundation
 
 enum ConnectionError {
     case underlying(Error)
+    case banned
+    case delayed
 }
 
 // MARK: - LocalizedServerError
@@ -22,6 +24,10 @@ extension ConnectionError: LocalizedError, Equatable {
         switch self {
         case let .underlying(error):
             return error.localizedDescription
+        case .banned:
+            return L10n.Splash.blocked
+        case .delayed:
+            return L10n.Splash.loading
         }
     }
 }

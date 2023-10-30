@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		228905DF2AEFCC6300591670 /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228905DE2AEFCC6300591670 /* Notification+Ext.swift */; };
+		228905E12AEFCCEC00591670 /* VerifyDeviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */; };
 		754120062A7288B900546B9C /* CLLocationCoordinate2D+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754120052A7288B900546B9C /* CLLocationCoordinate2D+Ext.swift */; };
 		758271872A6FD28A006141B9 /* UINavigationBarAppearance+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758271862A6FD28A006141B9 /* UINavigationBarAppearance+Ext.swift */; };
 		758271892A6FE4F6006141B9 /* FlagResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758271882A6FE4F6006141B9 /* FlagResolver.swift */; };
@@ -234,6 +236,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		228905DE2AEFCC6300591670 /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
+		228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyDeviceResponse.swift; sourceTree = "<group>"; };
 		754120052A7288B900546B9C /* CLLocationCoordinate2D+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Ext.swift"; sourceTree = "<group>"; };
 		758271862A6FD28A006141B9 /* UINavigationBarAppearance+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBarAppearance+Ext.swift"; sourceTree = "<group>"; };
 		758271882A6FE4F6006141B9 /* FlagResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagResolver.swift; sourceTree = "<group>"; };
@@ -763,8 +767,9 @@
 		75CAFAEB2A6AB10E0062CCBC /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				75CAFAEC2A6AB1170062CCBC /* Encodable+Ext.swift */,
 				7582723C2A7045B6006141B9 /* Data+Ext.swift */,
+				75CAFAEC2A6AB1170062CCBC /* Encodable+Ext.swift */,
+				228905DE2AEFCC6300591670 /* Notification+Ext.swift */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -845,6 +850,7 @@
 			isa = PBXGroup;
 			children = (
 				75CAFB0B2A6ABFB40062CCBC /* RegisterDeviceRequest.swift */,
+				228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1414,6 +1420,7 @@
 				75CAFAC22A6AACC00062CCBC /* AnyEncodable.swift in Sources */,
 				75CAFB002A6ABE940062CCBC /* CountriesAPITarget.swift in Sources */,
 				75CAFAF22A6AB9080062CCBC /* DataTask+Ext.swift in Sources */,
+				228905E12AEFCCEC00591670 /* VerifyDeviceResponse.swift in Sources */,
 				75CAFAC82A6AAD720062CCBC /* StoresDeviceToken.swift in Sources */,
 				758271EA2A702ECD006141B9 /* NETunnelProviderProtocol+Extension.swift in Sources */,
 				758271892A6FE4F6006141B9 /* FlagResolver.swift in Sources */,
@@ -1450,6 +1457,7 @@
 				7582723D2A7045B6006141B9 /* Data+Ext.swift in Sources */,
 				758272472A70463C006141B9 /* NEVPNManager+Ext.swift in Sources */,
 				75CAFAE42A6AADF70062CCBC /* DNSServerType.swift in Sources */,
+				228905DF2AEFCC6300591670 /* Notification+Ext.swift in Sources */,
 				75F10C2B2A6818F6004EBBB2 /* ImageAsset+Ext.swift in Sources */,
 				758271F82A702ECD006141B9 /* XModel.swift in Sources */,
 				758271F12A702ECD006141B9 /* XNetwork.swift in Sources */,
@@ -1824,7 +1832,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.uk.basedapps.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1867,7 +1875,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = co.uk.basedapps.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

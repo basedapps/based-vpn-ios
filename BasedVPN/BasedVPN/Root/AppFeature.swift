@@ -5,7 +5,6 @@
 //  Created Lika Vorobeva on 18.07.2023.
 
 import ComposableArchitecture
-import UIKit
 
 struct AppFeature: Reducer {
     struct State: Equatable {
@@ -16,7 +15,11 @@ struct AppFeature: Reducer {
     enum Action {
         case onAppear
         case fetchTokenResponse(TaskResult<Void>)
+        case verifyDeviceResponse(TaskResult<Bool>)
         case home(HomeFeature.Action)
+        
+        case deviceBanned
+        case deviceNotEnrolled
     }
 
     @Dependency(\.deviceClient) var deviceClient
@@ -34,13 +37,39 @@ struct AppFeature: Reducer {
                 })
 
             case .fetchTokenResponse(.success):
-                state.viewState = .loaded(state.homeState)
-                return .none
+                return .run(operation: { send in
+                    await send(.verifyDeviceResponse(TaskResult { try await deviceClient.verifyDevice() }))
+                })
 
-            case .fetchTokenResponse(.failure(let error)):
+            case let .fetchTokenResponse(.failure(error)):
                 state.viewState = .failed(.underlying(error))
-                return .none
 
+            case let .verifyDeviceResponse(.success(result)):
+                guard result else {
+                    state.viewState = .failed(.delayed)
+                    return .run(operation: { send in
+                        try await Task.sleep(until: .now + .seconds(5))
+                        await send(.verifyDeviceResponse(TaskResult { try await deviceClient.verifyDevice() }))
+                    })
+                }
+                state.viewState = .loaded(state.homeState)
+
+            case let .verifyDeviceResponse(.failure(error)):
+                if case ConnectionError.banned = error {
+                    state.viewState = .failed(.banned)
+                    return .none
+                }
+                state.viewState = .failed(.underlying(error))
+                
+            case .deviceBanned:
+                state.viewState = .failed(.banned)
+                
+            case .deviceNotEnrolled:
+                state.viewState = .failed(.delayed)
+                return .run(operation: { send in
+                    await send(.verifyDeviceResponse(TaskResult { try await deviceClient.verifyDevice() }))
+                })
+                
             default: ()
             }
 
