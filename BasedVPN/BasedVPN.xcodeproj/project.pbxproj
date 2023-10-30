@@ -652,7 +652,6 @@
 			isa = PBXGroup;
 			children = (
 				75CAFAB12A6AAA4A0062CCBC /* ApplicationConfiguration */,
-				75CAFB112A6AC2B70062CCBC /* Context */,
 				75F10B272A66E253004EBBB2 /* AppFeature.swift */,
 				75F10B242A66E253004EBBB2 /* AppState+view.swift */,
 				75F10B252A66E253004EBBB2 /* AppView.Action+feature.swift */,
@@ -848,13 +847,6 @@
 				75CAFB0B2A6ABFB40062CCBC /* RegisterDeviceRequest.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		75CAFB112A6AC2B70062CCBC /* Context */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Context;
 			sourceTree = "<group>";
 		};
 		75CAFB192A6D8A1C0062CCBC /* View */ = {
@@ -1967,8 +1959,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.55.1;
+				kind = exactVersion;
+				version = 0.59.0;
 			};
 		};
 		75C9D40C2A6570A300392392 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {
