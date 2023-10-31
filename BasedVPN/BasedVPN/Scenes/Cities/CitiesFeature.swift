@@ -26,10 +26,10 @@ struct CitiesFeature {
     @Dependency(\.countriesClient) var countriesClient
 }
 
-// MARK: - ReducerProtocol
+// MARK: - Reducer
 
-extension CitiesFeature: ReducerProtocol {
-    var body: some ReducerProtocolOf<Self> {
+extension CitiesFeature: Reducer {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case let .fetchCitiesResponse(.success(cities)):
@@ -45,10 +45,8 @@ extension CitiesFeature: ReducerProtocol {
 
             case .fetchCities:
                 state.isLoading = true
-                return .task(operation: { [id = state.country.id] in
-                    await .fetchCitiesResponse(TaskResult {
-                        try await countriesClient.fetchCities(id)
-                    })
+                return .run(operation: { [id = state.country.id] send in
+                    await send(.fetchCitiesResponse(TaskResult { try await countriesClient.fetchCities(id) }))
                 })
 
             default: ()

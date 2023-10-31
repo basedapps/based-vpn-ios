@@ -10,12 +10,24 @@ import Alamofire
 
 extension DataTask {
     func handlingError() async throws -> Value {
-        if let error = await response.error {
-            if let httpResponse = await response.response {
+        let response = await response
+        if let error = response.error {
+            if let httpResponse = response.response {
                 let error = GenericNetworkError(code: httpResponse.statusCode, message: error.localizedDescription)
+                
                 if error.commonError == .unauthorizedDevice {
                     APIStorage.shared.deviceToken = nil
+                    NotificationCenter.default.post(name: .unenrolled, object: nil)
                 }
+                
+                if error.commonError == .deviceBanned {
+                    NotificationCenter.default.post(name: .banned, object: nil)
+                }
+                
+                if error.commonError == .deviceNotEnrolled {
+                    NotificationCenter.default.post(name: .unenrolled, object: nil)
+                }
+                
                 throw error
             }
 
@@ -29,6 +41,6 @@ extension DataTask {
         }
 
         let uknownDescription = CommonAPIError.unknownError.localizedDescription
-        throw await GenericNetworkError(code: response.response?.statusCode ?? 400, message: uknownDescription)
+        throw GenericNetworkError(code: response.response?.statusCode ?? 400, message: uknownDescription)
     }
 }

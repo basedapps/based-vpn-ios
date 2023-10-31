@@ -64,9 +64,10 @@ extension CountryRowView {
 struct CountryRowView_Previews: PreviewProvider {
     static var previews: some View {
         let store = Store(
-            initialState: CountryRowFeature.State(country: .init(id: 0, name: "United Kingdom", code: "GB", serversAvailable: .random(in: 1...30))),
-            reducer: CountryRowFeature()
-        )
+            initialState: CountryRowFeature.State(
+                country: .init(id: 0, name: "United Kingdom", code: "GB", serversAvailable: .random(in: 1...30))
+            )
+        ) { CountryRowFeature() }
 
         return CountryRowView(store: store)
     }

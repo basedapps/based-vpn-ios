@@ -9,7 +9,7 @@ import ComposableArchitecture
 
 struct CountryListCancelID: Hashable {}
 
-struct CountriesFeature: ReducerProtocol {
+struct CountriesFeature: Reducer {
     struct State: Equatable {
         var viewState: ViewState<IdentifiedArrayOf<CountryRowFeature.State>, CountryError> = .loading
         var isLoading: Bool = true
@@ -29,7 +29,7 @@ struct CountriesFeature: ReducerProtocol {
 
     @Dependency(\.countriesClient) var countriesClient
 
-    var body: some ReducerProtocolOf<Self> {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case let .fetchCountriesResponse(.success(countries)):
@@ -48,10 +48,8 @@ struct CountriesFeature: ReducerProtocol {
 
             case .fetchCountries:
                 state.isLoading = true
-                return .task(operation: {
-                    await .fetchCountriesResponse(TaskResult {
-                        try await countriesClient.fetchCountries()
-                    })
+                return .run(operation: { send in
+                    await send(.fetchCountriesResponse(TaskResult { try await countriesClient.fetchCountries() }))
                 })
                 .cancellable(id: CountryListCancelID(), cancelInFlight: true)
 

@@ -66,10 +66,7 @@ internal enum L10n {
       internal static let disconnect = L10n.tr("Localizable", "Home.Button.Disconnect", fallback: "DISCONNECT")
     }
     internal enum Connection {
-      /// Localizable.strings
-      ///   BasedVPN
-      /// 
-      ///   Created by Lika Vorobeva on 19.07.2023.
+      /// YOUR IP ADDRESS
       internal static let ip = L10n.tr("Localizable", "Home.Connection.IP", fallback: "YOUR IP ADDRESS")
       internal enum Ip {
         /// Your connection appears to be unstable or offline
@@ -92,6 +89,15 @@ internal enum L10n {
       /// DNS Server
       internal static let title = L10n.tr("Localizable", "Settings.DNS.Title", fallback: "DNS Server")
     }
+  }
+  internal enum Splash {
+    /// App has been blocked for violating the terms of use of the service
+    internal static let blocked = L10n.tr("Localizable", "Splash.Blocked", fallback: "App has been blocked for violating the terms of use of the service")
+    /// Localizable.strings
+    ///   BasedVPN
+    /// 
+    ///   Created by Lika Vorobeva on 19.07.2023.
+    internal static let loading = L10n.tr("Localizable", "Splash.Loading", fallback: "Preparing your account...")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

@@ -66,9 +66,8 @@ extension CityRowView {
 struct CityRowView_Previews: PreviewProvider {
     static var previews: some View {
         let store = Store(
-            initialState: CityRowFeature.State(city: .init(id: 0, countryId: 0, name: "London", serversAvailable: 2)),
-            reducer: CityRowFeature()
-        )
+            initialState: CityRowFeature.State(city: .init(id: 0, countryId: 0, name: "London", serversAvailable: 2))
+        ) { CityRowFeature() }
 
         return CityRowView(store: store)
     }

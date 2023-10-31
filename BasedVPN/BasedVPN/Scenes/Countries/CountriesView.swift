@@ -103,11 +103,7 @@ private extension CountriesView {
 
 struct CountriesView_Previews: PreviewProvider {
     static var previews: some View {
-        let store = Store(
-            initialState: CountriesFeature.State(),
-            reducer: CountriesFeature()
-        )
-
+        let store = Store(initialState: CountriesFeature.State()) { CountriesFeature() }
         return CountriesView(store: store)
     }
 }

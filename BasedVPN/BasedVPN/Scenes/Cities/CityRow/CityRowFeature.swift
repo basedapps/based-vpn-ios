@@ -19,10 +19,10 @@ struct CityRowFeature {
     }
 }
 
-// MARK: - ReducerProtocol
+// MARK: - Reducer
 
-extension CityRowFeature: ReducerProtocol {
-    var body: some ReducerProtocolOf<Self> {
+extension CityRowFeature: Reducer {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .didTapRow:

@@ -38,6 +38,9 @@ struct HomeView: View {
                 contentView(for: viewStore)
             }
             .onAppear { viewStore.send(.onAppear) }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.willEnterForegroundNotification)) { notification in
+                viewStore.send(.onAppear)
+            }
             .navigationDestination(
                 store: store.scope(state: \.$destination, action: { .destination($0) }),
                 state: /HomeFeature.Destination.State.settings,
@@ -242,10 +245,7 @@ private extension HomeView {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        let store = Store(
-            initialState: HomeFeature.State(),
-            reducer: HomeFeature()
-        )
+        let store = Store(initialState: HomeFeature.State()) { HomeFeature() }
 
         return HomeView(store: store)
     }

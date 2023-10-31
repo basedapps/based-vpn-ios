@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 let appState = AppFeature.State(viewState: .loading, homeState: .init())
-let store = Store(initialState: appState, reducer: AppFeature())
+let store = Store(initialState: appState) { AppFeature() }
 
 @main
 struct BasedVPNApp: App {

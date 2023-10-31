@@ -18,10 +18,10 @@ struct CountryRowFeature {
     }
 }
 
-// MARK: - ReducerProtocol
+// MARK: - Reducer
 
-extension CountryRowFeature: ReducerProtocol {
-    var body: some ReducerProtocolOf<Self> {
+extension CountryRowFeature: Reducer {
+    var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .didTapRow:

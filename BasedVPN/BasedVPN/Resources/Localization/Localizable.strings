@@ -6,6 +6,11 @@
   
 */
 
+// MARK: - Splash
+
+"Splash.Loading" = "Preparing your account...";
+"Splash.Blocked" = "App has been blocked for violating the terms of use of the service";
+
 // MARK: - Home
 
 "Home.Connection.IP" = "YOUR IP ADDRESS";

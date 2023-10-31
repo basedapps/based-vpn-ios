@@ -99,9 +99,9 @@ struct CitiesView_Previews: PreviewProvider {
         let store = Store(
             initialState: CitiesFeature.State(
                 country: .init(id: 0, name: "United Kingdom", code: "GB", serversAvailable: 2)
-            ),
-            reducer: CitiesFeature()
-        )
+            )
+        ) { CitiesFeature() }
+
 
         return CitiesView(store: store)
     }

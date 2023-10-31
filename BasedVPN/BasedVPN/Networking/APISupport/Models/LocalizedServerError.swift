@@ -32,6 +32,8 @@ enum CommonAPIError: String, LocalizedError {
     case invalidRequest
     case notFound
     case unauthorizedDevice
+    case deviceBanned
+    case deviceNotEnrolled
     case temporaryUnavailable
     case serverUnavailable
 
@@ -45,6 +47,10 @@ enum CommonAPIError: String, LocalizedError {
             return Base.notFound
         case .unauthorizedDevice:
             return Base.unauthorizedDevice
+        case .deviceBanned:
+            return L10n.Splash.blocked
+        case .deviceNotEnrolled:
+            return L10n.ErrorState.Failure.description
         case .temporaryUnavailable:
             return Base.temporaryUnavailable
         case .serverUnavailable:
@@ -56,12 +62,16 @@ enum CommonAPIError: String, LocalizedError {
         switch code {
         case 400:
             self = .invalidRequest
-        case 401...403:
+        case 401:
             self = .unauthorizedDevice
+        case 403:
+            self = .deviceBanned
         case 404:
             self = .notFound
         case 410:
             self = .serverUnavailable
+        case 425:
+            self = .deviceNotEnrolled
         case 500...511:
             self = .temporaryUnavailable
         default:
