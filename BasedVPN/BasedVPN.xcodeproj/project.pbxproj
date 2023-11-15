@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		228905DF2AEFCC6300591670 /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228905DE2AEFCC6300591670 /* Notification+Ext.swift */; };
 		228905E12AEFCCEC00591670 /* VerifyDeviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */; };
+		22C96AD82B04CC2D0010CC0D /* Tun2SocksKit in Frameworks */ = {isa = PBXBuildFile; productRef = 22C96AD72B04CC2D0010CC0D /* Tun2SocksKit */; };
+		22C96ADA2B04CC420010CC0D /* XrayKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22C96AD92B04CC420010CC0D /* XrayKit.xcframework */; };
 		754120062A7288B900546B9C /* CLLocationCoordinate2D+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754120052A7288B900546B9C /* CLLocationCoordinate2D+Ext.swift */; };
 		758271872A6FD28A006141B9 /* UINavigationBarAppearance+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758271862A6FD28A006141B9 /* UINavigationBarAppearance+Ext.swift */; };
 		758271892A6FE4F6006141B9 /* FlagResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758271882A6FE4F6006141B9 /* FlagResolver.swift */; };
@@ -21,8 +23,6 @@
 		758271A92A702C28006141B9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 758271962A702C13006141B9 /* NetworkExtension.framework */; };
 		758271AC2A702C28006141B9 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758271AB2A702C28006141B9 /* PacketTunnelProvider.swift */; };
 		758271B12A702C28006141B9 /* V2RayExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 758271A82A702C28006141B9 /* V2RayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		758271BB2A702CDB006141B9 /* XrayKit in Frameworks */ = {isa = PBXBuildFile; productRef = 758271BA2A702CDB006141B9 /* XrayKit */; };
-		758271BE2A702CF8006141B9 /* Tun2SocksKit in Frameworks */ = {isa = PBXBuildFile; productRef = 758271BD2A702CF8006141B9 /* Tun2SocksKit */; };
 		758271C02A702D0C006141B9 /* libresolv.9.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 758271BF2A702D03006141B9 /* libresolv.9.tbd */; };
 		758271C22A702D13006141B9 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 758271C12A702D13006141B9 /* SwiftyBeaver */; };
 		758271C52A702D5F006141B9 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = 758271C42A702D5F006141B9 /* WireGuardKit */; };
@@ -238,6 +238,7 @@
 /* Begin PBXFileReference section */
 		228905DE2AEFCC6300591670 /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
 		228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyDeviceResponse.swift; sourceTree = "<group>"; };
+		22C96AD92B04CC420010CC0D /* XrayKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = XrayKit.xcframework; sourceTree = "<group>"; };
 		754120052A7288B900546B9C /* CLLocationCoordinate2D+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Ext.swift"; sourceTree = "<group>"; };
 		758271862A6FD28A006141B9 /* UINavigationBarAppearance+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationBarAppearance+Ext.swift"; sourceTree = "<group>"; };
 		758271882A6FE4F6006141B9 /* FlagResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagResolver.swift; sourceTree = "<group>"; };
@@ -410,11 +411,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22C96AD82B04CC2D0010CC0D /* Tun2SocksKit in Frameworks */,
 				758271C02A702D0C006141B9 /* libresolv.9.tbd in Frameworks */,
+				22C96ADA2B04CC420010CC0D /* XrayKit.xcframework in Frameworks */,
 				758271A92A702C28006141B9 /* NetworkExtension.framework in Frameworks */,
 				758271C22A702D13006141B9 /* SwiftyBeaver in Frameworks */,
-				758271BB2A702CDB006141B9 /* XrayKit in Frameworks */,
-				758271BE2A702CF8006141B9 /* Tun2SocksKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -678,6 +679,7 @@
 		75C9D4102A65735200392392 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22C96AD92B04CC420010CC0D /* XrayKit.xcframework */,
 				758271BF2A702D03006141B9 /* libresolv.9.tbd */,
 				758271962A702C13006141B9 /* NetworkExtension.framework */,
 			);
@@ -1181,9 +1183,8 @@
 			);
 			name = V2RayExtension;
 			packageProductDependencies = (
-				758271BA2A702CDB006141B9 /* XrayKit */,
-				758271BD2A702CF8006141B9 /* Tun2SocksKit */,
 				758271C12A702D13006141B9 /* SwiftyBeaver */,
+				22C96AD72B04CC2D0010CC0D /* Tun2SocksKit */,
 			);
 			productName = V2RayExtension;
 			productReference = 758271A82A702C28006141B9 /* V2RayExtension.appex */;
@@ -1256,9 +1257,8 @@
 				75C9D40C2A6570A300392392 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				75CAFABE2A6AAC8C0062CCBC /* XCRemoteSwiftPackageReference "Alamofire" */,
 				75CAFAE62A6AB01C0062CCBC /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				758271B92A702CDB006141B9 /* XCRemoteSwiftPackageReference "XrayKit" */,
-				758271BC2A702CF8006141B9 /* XCRemoteSwiftPackageReference "Tun2SocksKit" */,
 				758271C32A702D5F006141B9 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+				22C96AD62B04CC2D0010CC0D /* XCRemoteSwiftPackageReference "Tun2SocksKit" */,
 			);
 			productRefGroup = 75C9D3BD2A654AE000392392 /* Products */;
 			projectDirPath = "";
@@ -1813,7 +1813,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CONFIGURATION_VARIANT = Staging;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"BasedVPN/Preview Content\"";
 				DEVELOPMENT_TEAM = 5F44M2W7F4;
 				ENABLE_PREVIEWS = YES;
@@ -1856,7 +1856,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CONFIGURATION_VARIANT = Production;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"BasedVPN/Preview Content\"";
 				DEVELOPMENT_TEAM = 5F44M2W7F4;
 				ENABLE_PREVIEWS = YES;
@@ -1939,20 +1939,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		758271B92A702CDB006141B9 /* XCRemoteSwiftPackageReference "XrayKit" */ = {
+		22C96AD62B04CC2D0010CC0D /* XCRemoteSwiftPackageReference "Tun2SocksKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daemooon/XrayKit.git";
+			repositoryURL = "https://github.com/solarlabsteam/Tun2SocksKit";
 			requirement = {
-				kind = exactVersion;
-				version = 0.1.62;
-			};
-		};
-		758271BC2A702CF8006141B9 /* XCRemoteSwiftPackageReference "Tun2SocksKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daemooon/Tun2SocksKit.git";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 2.5.0;
+				branch = xcframework;
+				kind = branch;
 			};
 		};
 		758271C32A702D5F006141B9 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
@@ -1998,14 +1990,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		758271BA2A702CDB006141B9 /* XrayKit */ = {
+		22C96AD72B04CC2D0010CC0D /* Tun2SocksKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 758271B92A702CDB006141B9 /* XCRemoteSwiftPackageReference "XrayKit" */;
-			productName = XrayKit;
-		};
-		758271BD2A702CF8006141B9 /* Tun2SocksKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 758271BC2A702CF8006141B9 /* XCRemoteSwiftPackageReference "Tun2SocksKit" */;
+			package = 22C96AD62B04CC2D0010CC0D /* XCRemoteSwiftPackageReference "Tun2SocksKit" */;
 			productName = Tun2SocksKit;
 		};
 		758271C12A702D13006141B9 /* SwiftyBeaver */ = {
