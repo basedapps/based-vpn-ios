@@ -1,6 +1,6 @@
 //
 //  AppView.swift
-//  BasedVPN
+//  BagimsizVPN
 //
 //  Created Lika Vorobeva on 18.07.2023.
 
@@ -8,37 +8,23 @@ import ComposableArchitecture
 import SwiftUI
 
 struct AppView: View {
-    struct State: Equatable {
-        let viewState: ViewState<HomeFeature.State, ConnectionError>
-    }
-
-    enum Action: Equatable {
-        case onAppear
-        case deviceBanned
-        case deviceNotEnrolled
-    }
-    
     let store: StoreOf<AppFeature>
 
     @SwiftUI.State private var isToastPresenting = false
 
     var body: some View {
-        WithViewStore(
-            store.scope(
-                state: \.view,
-                action: { (viewAction: AppView.Action) in
-                    viewAction.feature
-                }
-            ),
-            observe: { $0 },
-            content: content
-        )
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            content(for: viewStore)
+                .alert(store: store.scope(state: \.$alert, action: { .alert($0) }))
+        }
     }
 }
 
 extension AppView {
+    typealias OnboardingStore = ViewStore<AppFeature.State, AppFeature.Action>
+    
     @ViewBuilder
-    private func content(viewStore: ViewStore<AppView.State, AppView.Action>) -> some View {
+    private func content(for viewStore: OnboardingStore) -> some View {
         switch viewStore.viewState {
         case .loading:
             ProgressView()
@@ -54,9 +40,13 @@ extension AppView {
                     )
                 )
             }
-            .accentColor(Colors.accentBlue.asColor)
-            .onAppear {
-                UINavigationBarAppearance().applyStyle()
+            .accentColor(Colors.white.asColor)
+            .onAppear { UINavigationBarAppearance().applyStyle() }
+            .onReceive(NotificationCenter.default.publisher(for: .banned).receive(on: DispatchQueue.main)) { notification in
+                viewStore.send(.deviceBanned)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .unenrolled).receive(on: DispatchQueue.main)) { notification in
+                viewStore.send(.deviceNotEnrolled)
             }
         case let .failed(error):
             errorView(for: error, in: viewStore)
@@ -66,7 +56,7 @@ extension AppView {
 
 extension AppView {
     @ViewBuilder
-    func errorView(for error: ConnectionError, in viewStore: ViewStore<AppView.State, AppView.Action>) -> some View {
+    func errorView(for error: ConnectionError, in viewStore: OnboardingStore) -> some View {
         switch error {
         case let .underlying(error):
             ErrorStateView(type: .error(retry: { viewStore.send(.onAppear) }))
@@ -84,4 +74,10 @@ extension AppView {
             }
         }
     }
+}
+
+// MARK: - Preview
+
+#Preview {
+    AppView(store: Store(initialState: appState) { AppFeature() })
 }

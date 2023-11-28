@@ -10,6 +10,9 @@
 
 "Splash.Loading" = "Preparing your account...";
 "Splash.Blocked" = "App has been blocked for violating the terms of use of the service";
+"Splash.Update.Title" = "Update Required";
+"Splash.Update.Description" = "Please download latest version of the app";
+"Splash.Update.Button" = "Go to App Store";
 
 // MARK: - Home
 

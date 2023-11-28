@@ -8,9 +8,16 @@
 import Foundation
 import ComposableArchitecture
 
+private struct Constants {
+    let currentVersion = "0"
+}
+
+private let constants = Constants()
+
 struct DeviceClient {
     var storeTokenIfNeeded: () async throws -> Void
     var verifyDevice: () async throws -> Bool
+    var verifyVersion: () async throws -> Bool
 }
 
 private enum DeviceClientKey: DependencyKey {
@@ -42,6 +49,11 @@ extension DeviceClient {
                 let response = try await service.verifyDevice()
                 guard !response.isBanned else { throw ConnectionError.banned }
                 return response.isEnrolled
+            },
+            verifyVersion: {
+                let response = try await service.version()
+                let compareResult = constants.currentVersion.compare(response, options: .numeric)
+                return compareResult == .orderedSame || compareResult == .orderedDescending
             }
         )
     }

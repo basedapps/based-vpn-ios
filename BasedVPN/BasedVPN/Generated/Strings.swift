@@ -98,6 +98,14 @@ internal enum L10n {
     /// 
     ///   Created by Lika Vorobeva on 19.07.2023.
     internal static let loading = L10n.tr("Localizable", "Splash.Loading", fallback: "Preparing your account...")
+    internal enum Update {
+      /// Go to App Store
+      internal static let button = L10n.tr("Localizable", "Splash.Update.Button", fallback: "Go to App Store")
+      /// Please download latest version of the app
+      internal static let description = L10n.tr("Localizable", "Splash.Update.Description", fallback: "Please download latest version of the app")
+      /// Update Required
+      internal static let title = L10n.tr("Localizable", "Splash.Update.Title", fallback: "Update Required")
+    }
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

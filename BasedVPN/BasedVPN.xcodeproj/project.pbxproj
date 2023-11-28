@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2263FB5D2B162A4500411EA0 /* AlertState+Version.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2263FB5C2B162A4500411EA0 /* AlertState+Version.swift */; };
+		2263FB612B162A7A00411EA0 /* UIApplicationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2263FB602B162A7A00411EA0 /* UIApplicationClient.swift */; };
+		2263FB632B162BEF00411EA0 /* SupportedVersionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2263FB622B162BEF00411EA0 /* SupportedVersionsResponse.swift */; };
 		228905DF2AEFCC6300591670 /* Notification+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228905DE2AEFCC6300591670 /* Notification+Ext.swift */; };
 		228905E12AEFCCEC00591670 /* VerifyDeviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */; };
 		22C96AD82B04CC2D0010CC0D /* Tun2SocksKit in Frameworks */ = {isa = PBXBuildFile; productRef = 22C96AD72B04CC2D0010CC0D /* Tun2SocksKit */; };
@@ -159,8 +162,6 @@
 		75F10B1B2A66D794004EBBB2 /* HomeView.Action+feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B172A66D794004EBBB2 /* HomeView.Action+feature.swift */; };
 		75F10B1C2A66D794004EBBB2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B182A66D794004EBBB2 /* HomeView.swift */; };
 		75F10B1D2A66D794004EBBB2 /* HomeFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B192A66D794004EBBB2 /* HomeFeature.swift */; };
-		75F10B282A66E253004EBBB2 /* AppState+view.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B242A66E253004EBBB2 /* AppState+view.swift */; };
-		75F10B292A66E253004EBBB2 /* AppView.Action+feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B252A66E253004EBBB2 /* AppView.Action+feature.swift */; };
 		75F10B2A2A66E253004EBBB2 /* AppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B262A66E253004EBBB2 /* AppView.swift */; };
 		75F10B2B2A66E253004EBBB2 /* AppFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B272A66E253004EBBB2 /* AppFeature.swift */; };
 		75F10B2E2A67F39C004EBBB2 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F10B2D2A67F39C004EBBB2 /* MapView.swift */; };
@@ -236,6 +237,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2263FB5C2B162A4500411EA0 /* AlertState+Version.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertState+Version.swift"; sourceTree = "<group>"; };
+		2263FB602B162A7A00411EA0 /* UIApplicationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationClient.swift; sourceTree = "<group>"; };
+		2263FB622B162BEF00411EA0 /* SupportedVersionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportedVersionsResponse.swift; sourceTree = "<group>"; };
 		228905DE2AEFCC6300591670 /* Notification+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Ext.swift"; sourceTree = "<group>"; };
 		228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyDeviceResponse.swift; sourceTree = "<group>"; };
 		22C96AD92B04CC420010CC0D /* XrayKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = XrayKit.xcframework; sourceTree = "<group>"; };
@@ -359,8 +363,6 @@
 		75F10B172A66D794004EBBB2 /* HomeView.Action+feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeView.Action+feature.swift"; sourceTree = "<group>"; };
 		75F10B182A66D794004EBBB2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		75F10B192A66D794004EBBB2 /* HomeFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFeature.swift; sourceTree = "<group>"; };
-		75F10B242A66E253004EBBB2 /* AppState+view.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+view.swift"; sourceTree = "<group>"; };
-		75F10B252A66E253004EBBB2 /* AppView.Action+feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppView.Action+feature.swift"; sourceTree = "<group>"; };
 		75F10B262A66E253004EBBB2 /* AppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppView.swift; sourceTree = "<group>"; };
 		75F10B272A66E253004EBBB2 /* AppFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFeature.swift; sourceTree = "<group>"; };
 		75F10B2D2A67F39C004EBBB2 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
@@ -435,6 +437,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2263FB5B2B162A2600411EA0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2263FB5C2B162A4500411EA0 /* AlertState+Version.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2263FB5E2B162A6100411EA0 /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				2263FB5F2B162A7400411EA0 /* UIApplicationClient */,
+			);
+			path = Clients;
+			sourceTree = "<group>";
+		};
+		2263FB5F2B162A7400411EA0 /* UIApplicationClient */ = {
+			isa = PBXGroup;
+			children = (
+				2263FB602B162A7A00411EA0 /* UIApplicationClient.swift */,
+			);
+			path = UIApplicationClient;
+			sourceTree = "<group>";
+		};
 		754120042A7288B100546B9C /* MapKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -619,11 +645,12 @@
 		75C9D3BE2A654AE000392392 /* BasedVPN */ = {
 			isa = PBXGroup;
 			children = (
-				758A11602A713DFA006A0B1D /* Info.plist */,
 				75C9D40F2A65715A00392392 /* BasedVPN.entitlements */,
+				2263FB5E2B162A6100411EA0 /* Clients */,
 				75F10BFF2A681878004EBBB2 /* Common */,
 				75F10C862A6AA5B2004EBBB2 /* Configurations */,
 				75F10BF12A680433004EBBB2 /* Generated */,
+				758A11602A713DFA006A0B1D /* Info.plist */,
 				75F10C702A682D7E004EBBB2 /* Networking */,
 				75C9D3C52A654AE100392392 /* Preview Content */,
 				75C9D3D22A656F3C00392392 /* Resources */,
@@ -657,9 +684,8 @@
 			isa = PBXGroup;
 			children = (
 				75CAFAB12A6AAA4A0062CCBC /* ApplicationConfiguration */,
+				2263FB5B2B162A2600411EA0 /* Models */,
 				75F10B272A66E253004EBBB2 /* AppFeature.swift */,
-				75F10B242A66E253004EBBB2 /* AppState+view.swift */,
-				75F10B252A66E253004EBBB2 /* AppView.Action+feature.swift */,
 				75F10B262A66E253004EBBB2 /* AppView.swift */,
 				75C9D3BF2A654AE000392392 /* BasedVPNApp.swift */,
 			);
@@ -853,6 +879,7 @@
 			children = (
 				75CAFB0B2A6ABFB40062CCBC /* RegisterDeviceRequest.swift */,
 				228905E02AEFCCEC00591670 /* VerifyDeviceResponse.swift */,
+				2263FB622B162BEF00411EA0 /* SupportedVersionsResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1432,7 +1459,6 @@
 				75F10C362A6818F6004EBBB2 /* String+Ext.swift in Sources */,
 				758271FA2A702ECD006141B9 /* SniffingModel.swift in Sources */,
 				75CAFAE02A6AADF70062CCBC /* UserDefaultsStorageStrategy.swift in Sources */,
-				75F10B282A66E253004EBBB2 /* AppState+view.swift in Sources */,
 				75CAFB302A6D99060062CCBC /* CitiesFeature.swift in Sources */,
 				75F10C8F2A6AA74B004EBBB2 /* ConnectionAPIService.swift in Sources */,
 				75CAFB272A6D98CA0062CCBC /* CountryError.swift in Sources */,
@@ -1445,6 +1471,7 @@
 				75F10B502A68029E004EBBB2 /* SettingsView.swift in Sources */,
 				75F10BFB2A680674004EBBB2 /* Fonts.swift in Sources */,
 				75F10B1D2A66D794004EBBB2 /* HomeFeature.swift in Sources */,
+				2263FB612B162A7A00411EA0 /* UIApplicationClient.swift in Sources */,
 				758A115F2A712E3D006A0B1D /* TunnelManagerSubscriberDelegate.swift in Sources */,
 				7582722E2A7044E3006141B9 /* TunnelsServiceStatusDelegate.swift in Sources */,
 				758272382A7044EB006141B9 /* PeersModel.swift in Sources */,
@@ -1478,6 +1505,7 @@
 				75CAFB2F2A6D99060062CCBC /* CitiesView.swift in Sources */,
 				758271F52A702ECD006141B9 /* XSecurity.swift in Sources */,
 				758271F32A702ECD006141B9 /* XConfiguration.swift in Sources */,
+				2263FB5D2B162A4500411EA0 /* AlertState+Version.swift in Sources */,
 				758271ED2A702ECD006141B9 /* ConfigurationParseError.swift in Sources */,
 				7582724E2A712B64006141B9 /* TunnelManagerSubscriber.swift in Sources */,
 				7582718D2A701A7A006141B9 /* ServerProtocol.swift in Sources */,
@@ -1490,6 +1518,7 @@
 				75F10B4E2A68029E004EBBB2 /* SettingsState+view.swift in Sources */,
 				758271FB2A702ECD006141B9 /* NetworkModel.swift in Sources */,
 				7582723A2A7044EB006141B9 /* TunnelInterfaceModel.swift in Sources */,
+				2263FB632B162BEF00411EA0 /* SupportedVersionsResponse.swift in Sources */,
 				75F10C052A681897004EBBB2 /* TextStyles.swift in Sources */,
 				7582722C2A7044E3006141B9 /* TunnelStatus.swift in Sources */,
 				75CAFAE22A6AADF70062CCBC /* KeychainStorageStrategy.swift in Sources */,
@@ -1512,7 +1541,6 @@
 				75F10C062A681897004EBBB2 /* FontBase.swift in Sources */,
 				75CAFB2E2A6D99060062CCBC /* CitiesView.Action+feature.swift in Sources */,
 				758272402A70460B006141B9 /* NotificationToken.swift in Sources */,
-				75F10B292A66E253004EBBB2 /* AppView.Action+feature.swift in Sources */,
 				75CAFB0E2A6AC1450062CCBC /* DeviceClient.swift in Sources */,
 				75F10B512A68029E004EBBB2 /* SettingsFeature.swift in Sources */,
 				758272372A7044EB006141B9 /* TunnelSavingError.swift in Sources */,
