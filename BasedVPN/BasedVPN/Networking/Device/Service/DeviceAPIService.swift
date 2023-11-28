@@ -11,6 +11,7 @@ import Alamofire
 // MARK: - DeviceAPIService
 
 protocol DeviceAPIService {
+    func version() async throws -> String
     func registerDevice(platform: String) async throws -> StorableToken
     func verifyDevice() async throws -> VerifyDeviceResponse
 }
@@ -25,8 +26,16 @@ final class DefaultDeviceAPIService: DeviceAPIService {
         self.session = Session(interceptor: interceptor)
     }
     
+    func version() async throws -> String {
+        try await AF.request(request(for: .getVersion))
+            .serializingDecodable(DataResponse<SupportedVersionsResponse>.self)
+            .handlingError()
+            .data
+            .version
+    }
+    
     func registerDevice(platform: String) async throws -> StorableToken {
-        let body = RegisterDeviceRequest(platform: "IOS")
+        let body = RegisterDeviceRequest(platform: platform)
         return try await AF.request(request(for: .registerDevice(body)))
             .serializingDecodable(DataResponse<StorableToken>.self)
             .handlingError()

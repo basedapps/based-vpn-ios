@@ -4,27 +4,41 @@
 //
 //  Created Lika Vorobeva on 18.07.2023.
 
+import UIKit
 import ComposableArchitecture
 
 // MARK: - AppFeature
 
 struct AppFeature {
     struct State: Equatable {
+        @PresentationState var alert: AlertState<Action.Alert>?
+        
+        var isLaunch = true
         var viewState: ViewState<HomeFeature.State, ConnectionError>
         var homeState: HomeFeature.State
     }
-
+    
     enum Action {
+        case alert(PresentationAction<Alert>)
+        
         case onAppear
+        case didBecomeActive
+        
         case fetchTokenResponse(TaskResult<Void>)
         case verifyDeviceResponse(TaskResult<Bool>)
+        case verifyVersionResponse(TaskResult<Bool>)
         case home(HomeFeature.Action)
         
         case deviceBanned
         case tunnelStopped
         case deviceNotEnrolled
+        
+        enum Alert: Equatable {
+            case openStore
+        }
     }
-
+    
+    @Dependency(\.applicationClient) var applicationClient
     @Dependency(\.deviceClient) var deviceClient
     @Dependency(\.tunnelManagerSubscriber) var tunnelManagerSubscriber
 }
@@ -40,6 +54,40 @@ extension AppFeature: Reducer {
             switch action {
             case .onAppear:
                 Config.setup()
+                return .merge(
+                    .run { send in
+                        await send(
+                            .verifyVersionResponse(TaskResult { try await deviceClient.verifyVersion() })
+                        )
+                    },
+                    .publisher {
+                        NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+                            .map { _ in .didBecomeActive }
+                    }
+                )
+                
+            case .didBecomeActive:
+                state.isLaunch = false
+                return .run { send in
+                    await send(
+                        .verifyVersionResponse(TaskResult { try await deviceClient.verifyVersion() })
+                    )
+                }
+
+            case let .verifyVersionResponse(.success(isValid)):
+                guard isValid else {
+                    state.alert = .updateRequired
+                    return .none
+                }
+                
+                if state.isLaunch {
+                    return .run(operation: { send in
+                        await send(.fetchTokenResponse(TaskResult { try await deviceClient.storeTokenIfNeeded() }))
+                    })
+                }
+
+            case let .verifyVersionResponse(.failure(error)):
+                log.error(error)
                 return .run(operation: { send in
                     await send(.fetchTokenResponse(TaskResult { try await deviceClient.storeTokenIfNeeded() }))
                 })
@@ -78,11 +126,20 @@ extension AppFeature: Reducer {
                     await send(.verifyDeviceResponse(TaskResult { try await deviceClient.verifyDevice() }))
                 })
                 
+            case .alert(.presented(.openStore)):
+                return .run { _ in
+                    guard
+                        let url = URL(string: ClientConstants.appStoreID)
+                    else { return }
+                    _ = await applicationClient.open(url, [:])
+                }
+                
             default: ()
             }
 
             return .none
         }
+        .ifLet(\.$alert, action: /Action.alert)
     }
 }
 
