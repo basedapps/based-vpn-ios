@@ -9,7 +9,7 @@ import Foundation
 import ComposableArchitecture
 
 private struct Constants {
-    let currentVersion = "0"
+    let currentVersion = "1"
 }
 
 private let constants = Constants()
