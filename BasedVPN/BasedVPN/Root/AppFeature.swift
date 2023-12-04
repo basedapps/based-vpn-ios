@@ -13,7 +13,6 @@ struct AppFeature {
     struct State: Equatable {
         @PresentationState var alert: AlertState<Action.Alert>?
         
-        var isLaunch = true
         var viewState: ViewState<HomeFeature.State, ConnectionError>
         var homeState: HomeFeature.State
     }
@@ -62,12 +61,12 @@ extension AppFeature: Reducer {
                     },
                     .publisher {
                         NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+                            .dropFirst()
                             .map { _ in .didBecomeActive }
                     }
                 )
                 
             case .didBecomeActive:
-                state.isLaunch = false
                 return .run { send in
                     await send(
                         .verifyVersionResponse(TaskResult { try await deviceClient.verifyVersion() })
@@ -80,10 +79,13 @@ extension AppFeature: Reducer {
                     return .none
                 }
                 
-                if state.isLaunch {
+                switch state.viewState {
+                case .loading, .failed:
                     return .run(operation: { send in
                         await send(.fetchTokenResponse(TaskResult { try await deviceClient.storeTokenIfNeeded() }))
                     })
+                default:
+                    return .none
                 }
 
             case let .verifyVersionResponse(.failure(error)):
