@@ -37,7 +37,7 @@ struct HomeFeature: Reducer {
 
         var isConnected: Bool = false
         var selectedCity: City?
-        
+
         @PresentationState var destination: Destination.State?
     }
 
@@ -153,6 +153,8 @@ struct HomeFeature: Reducer {
     }
 }
 
+// MARK: - Tunnel events
+
 private extension HomeFeature {
     func handle(action: TunnelManagerSubscriber.Action, for state: inout State) -> Effect<Action> {
         switch action {
@@ -161,6 +163,7 @@ private extension HomeFeature {
             state.error = connectionError.localizedDescription
             state.isLoading = false
         case .didLoad:
+            guard state.isLoading else { return .none }
             state.isLoading = false
             return .send(.fetchIP)
         case .handleTunnelUpdatingStatus:

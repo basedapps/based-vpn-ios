@@ -7,28 +7,34 @@
 
 import ComposableArchitecture
 
-struct CountryListCancelID: Hashable {}
+private struct CountryListCancelID: Hashable {}
 
-struct CountriesFeature: Reducer {
+// MARK: - CountriesFeature
+
+struct CountriesFeature {
     struct State: Equatable {
         var viewState: ViewState<IdentifiedArrayOf<CountryRowFeature.State>, CountryError> = .loading
         var isLoading: Bool = true
-
+        
         @PresentationState var selection: CitiesFeature.State?
     }
-
+    
     enum Action: Equatable {
         case row(index: CountryRowFeature.State.ID, action: CountryRowFeature.Action)
-
+        
         case fetchCountries
         case fetchCountriesResponse(TaskResult<[Country]>)
-
+        
         case cities(PresentationAction<CitiesFeature.Action>)
         case didSelect(City)
     }
-
+    
     @Dependency(\.countriesClient) var countriesClient
+}
 
+// MARK: - Reducer
+
+extension CountriesFeature: Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {

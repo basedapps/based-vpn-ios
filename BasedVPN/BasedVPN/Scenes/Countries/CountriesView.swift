@@ -15,96 +15,57 @@ struct CountriesView: View {
     @SwiftUI.State private var isToastPresenting = false
 
     var body: some View {
-        WithViewStore(
-            store.scope(
-                state: \.view,
-                action: { (viewAction: CountriesView.Action) in
-                    viewAction.feature
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            VStack {
+                switch viewStore.viewState {
+                case .loading:
+                    ProgressView()
+                        .onAppear {
+                            viewStore.send(.fetchCountries)
+                        }
+                case let .loaded(rowsState):
+                    if rowsState.isEmpty {
+                        ErrorStateView(type: .empty)
+                    } else {
+                        listView(for: rowsState)
+                            .refreshable {
+                                await viewStore.send(.fetchCountries, while: \.isLoading)
+                            }
+                    }
+                case let .failed(error):
+                    ErrorStateView(type: .error(retry: { viewStore.send(.fetchCountries) }))
+                        .onAppear { isToastPresenting = true }
+                        .toast(message: error.localizedDescription, isShowing: $isToastPresenting, type: .error)
                 }
-            ),
-            observe: { $0 },
-            content: content
-        )
-    }
-}
-
-// MARK: - State & Action
-
-extension CountriesView {
-    struct State: Equatable {
-        let viewState: ViewState<IdentifiedArrayOf<CountryRowFeature.State>, CountryError>
-        let isCountryPresented: Bool
-        let isLoading: Bool
-    }
-
-    enum Action: Equatable {
-        case refresh
+            }
+            .navigationTitle(L10n.Countries.navigation)
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
 // MARK: - View decomposition
 
 private extension CountriesView {
-    @ViewBuilder func content(viewStore: ViewStore<CountriesView.State, CountriesView.Action>) -> some View {
-        VStack {
-            switch viewStore.viewState {
-            case .loading:
-                ProgressView()
-                    .onAppear {
-                        viewStore.send(.refresh)
-                    }
-            case .loaded:
-                listView(for: viewStore)
-            case let .failed(error):
-                ErrorStateView(type: .error(retry: { viewStore.send(.refresh) }))
-                    .onAppear { isToastPresenting = true }
-                    .toast(message: error.localizedDescription, isShowing: $isToastPresenting, type: .error)
-            }
-        }
-        .navigationTitle(L10n.Countries.navigation)
-    }
-
     @ViewBuilder
-    func listView(for viewStore: ViewStore<CountriesView.State, CountriesView.Action>) -> some View {
-        if case let ViewState.loaded(rowsState) = viewStore.viewState, !rowsState.isEmpty {
-            VStack(spacing: 0) {
-                Divider()
-                List {
-                    ForEachStore(
-                        store.scope(
-                            state: { _ in rowsState },
-                            action: CountriesFeature.Action.row
-                        )
-                    ) { rowStore in
-                        CountryRowView(store: rowStore)
-                    }
-                }
-                .listStyle(.plain)
-                .navigationDestination(
-                    store: store.scope(
-                        state: \.$selection,
-                        action: CountriesFeature.Action.cities
-                    ),
-                    destination: { store in
-                        CitiesView(store: store)
-                    }
-                )
-                .refreshable {
-                    await viewStore.send(.refresh, while: \.isLoading)
-                }
+    func listView(for rowState: IdentifiedArrayOf<CountryRowFeature.State>) -> some View {
+        VStack(spacing: 0) {
+            Divider()
+            List {
+                ForEachStore(store.scope(state: { _ in rowState }, action: CountriesFeature.Action.row))
+                { CountryRowView(store: $0) }
             }
-        } else {
-            ErrorStateView(type: .empty)
+            .listStyle(.plain)
+            .navigationDestination(
+                store: store.scope(state: \.$selection, action: CountriesFeature.Action.cities),
+                destination: { CitiesView(store: $0) }
+            )
         }
     }
 }
 
 // MARK: - Preview
 
-struct CountriesView_Previews: PreviewProvider {
-    static var previews: some View {
-        let store = Store(initialState: CountriesFeature.State()) { CountriesFeature() }
-        return CountriesView(store: store)
-    }
+#Preview {
+    CountriesView(store: .init(initialState: .init()) { CountriesFeature() })
 }
-

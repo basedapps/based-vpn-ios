@@ -25,10 +25,6 @@ struct DisclosureGroupSectionItem<Selection: SelectionType>: View {
 
     var body: some View {
         disclosureGroup
-            .alignmentGuide(.listRowSeparatorLeading) { _ in
-                return -10
-            }
-            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
 }
 
@@ -50,6 +46,7 @@ extension DisclosureGroupSectionItem {
             }
         }
         .pickerStyle(.wheel)
+        .labelsHidden()
         .frame(height: 80)
     }
 
