@@ -1987,8 +1987,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
 			requirement = {
-				kind = exactVersion;
-				version = 0.59.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.5.5;
 			};
 		};
 		75C9D40C2A6570A300392392 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */ = {

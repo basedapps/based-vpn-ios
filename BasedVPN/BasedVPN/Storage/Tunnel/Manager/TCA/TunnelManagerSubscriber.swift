@@ -12,11 +12,11 @@ import ComposableArchitecture
 // MARK: - TunnelManagerSubscriber
 
 struct TunnelManagerSubscriber {
-    var delegate: () -> EffectTask<Action>
+    var delegate: () -> Effect<Action>
 
-    var startVPN: (ConnectionCredentials) -> EffectTask<Action>
-    var stopVPN: () -> EffectTask<Action>
-    var getVPNStatus: () -> EffectTask<Action>
+    var startVPN: (ConnectionCredentials) -> Effect<Action>
+    var stopVPN: () -> Effect<Action>
+    var getVPNStatus: () -> Effect<Action>
 
     private let manager: TunnelManager
 }
@@ -48,45 +48,39 @@ extension DependencyValues {
 extension TunnelManagerSubscriber {
     static var live: Self {
         let manager = TunnelManager(storage: GeneralSettingsStorage.live)
-
-        let delegate = EffectTask<Action>.run { subscriber in
-            let delegate = TunnelManagerSubscriberDelegate(subscriber)
-            manager.delegate = delegate
-
-            return AnyCancellable {
-                _ = delegate
-            }
-        }
-
+        
+        let delegate = TunnelManagerSubscriberDelegate()
+        manager.delegate = delegate
+        
         return Self(
-            delegate: { delegate },
+            delegate: { .publisher(delegate.subject.eraseToAnyPublisher) },
             startVPN: { creds in
-                return EffectTask<Action>.run { subscriber in
+                return Effect<Action>.run { send in
                     switch creds.vpnProtocol {
                     case .v2ray:
                         if let error = manager.startXray(from: creds) {
-                            subscriber.send(.didFail(.underlying(error)))
+                            await send(.didFail(.underlying(error)))
                         }
 
                     case .wireguard:
                         if let error = manager.startWireguard(from: creds) {
-                            subscriber.send(.didFail(.underlying(error)))
+                            await send(.didFail(.underlying(error)))
                         }
+                    default:
+                        log.error("Unsupported protocol")
+                        await send(.didFail(.underlying(CommonAPIError.serverUnavailable)))
                     }
-                    return AnyCancellable { }
                 }
             },
             stopVPN: {
-                EffectTask<Action>.run { subscriber in
+                Effect<Action>.run { _ in
                     manager.startDeactivationOfActiveTunnel()
-                    return AnyCancellable { }
                 }
             },
             getVPNStatus: {
-                EffectTask<Action>.run { subscriber in
+                Effect<Action>.run { send in
                     let status = manager.isTunnelActive
-                    subscriber.send(.setStatus(status))
-                    return AnyCancellable { }
+                    await send(.setStatus(status))
                 }
             },
             manager: manager
