@@ -6,23 +6,19 @@
 //
 
 import Foundation
-import ComposableArchitecture
+import Combine
 
 // MARK: - TunnelManagerSubscriberDelegate
 
 final class TunnelManagerSubscriberDelegate: NSObject {
-    let subscriber: EffectTask<TunnelManagerSubscriber.Action>.Subscriber
-
-    init(_ subscriber: EffectTask<TunnelManagerSubscriber.Action>.Subscriber) {
-        self.subscriber = subscriber
-    }
+    let subject = PassthroughSubject<TunnelManagerSubscriber.Action, Never>()
 }
 
 // MARK: - TunnelManagerDelegate
 
 extension TunnelManagerSubscriberDelegate: TunnelManagerDelegate {
     func handleTunnelUpdatingStatus() {
-        subscriber.send(.handleTunnelUpdatingStatus)
+        asyncSend(action: .handleTunnelUpdatingStatus)
     }
 
     func handleError(_ error: Error) {
@@ -75,15 +71,21 @@ extension TunnelManagerSubscriberDelegate: TunnelsServiceStatusDelegate {
 // MARK: - Private methods
 
 private extension TunnelManagerSubscriberDelegate {
+    func asyncSend(action: TunnelManagerSubscriber.Action) {
+        DispatchQueue.main.async {
+            self.subject.send(action)
+        }
+    }
+
     func show(error: Error) {
         log.error(error)
         stopLoading()
 
-        subscriber.send(.didFail(.underlying(error)))
+        asyncSend(action: .didFail(.underlying(error)))
     }
 
     func stopLoading() {
         handleTunnelUpdatingStatus()
-        subscriber.send(.didLoad)
+        asyncSend(action: .didLoad)
     }
 }

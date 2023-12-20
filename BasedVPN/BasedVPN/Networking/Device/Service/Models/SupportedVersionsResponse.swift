@@ -5,7 +5,6 @@
 //  Created by Lika Vorobeva on 28.11.2023.
 //
 
-
 import Foundation
 
 // MARK: - SupportedVersionsResponse

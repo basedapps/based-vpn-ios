@@ -13,15 +13,7 @@ struct CityRowView: View {
     let store: StoreOf<CityRowFeature>
 
     var body: some View {
-        WithViewStore(
-            store.scope(
-                state: \.view,
-                action: { (viewAction: CityRowView.Action) in
-                    viewAction.feature
-                }
-            ),
-            observe: { $0 }
-        ) { viewStore in
+        WithViewStore(store, observe: { $0.city }) { viewStore in
             Button(action: { viewStore.send(.didTapRow) }) {
                 HStack(spacing: 0) {
                     viewStore.name
@@ -30,7 +22,7 @@ struct CityRowView: View {
                     " • "
                         .asText
                         .applyTextStyle(.mouseGrey(ofSize: 17))
-                    L10n.Countries.Item.servers(viewStore.serversCount)
+                    L10n.Countries.Item.servers(viewStore.serversAvailable)
                         .asText
                         .applyTextStyle(.mouseGrey(ofSize: 17))
 
@@ -48,27 +40,11 @@ struct CityRowView: View {
     }
 }
 
-// MARK: - State & Action
-
-extension CityRowView {
-    struct State: Equatable {
-        let name: String
-        let serversCount: Int
-    }
-
-    enum Action: Equatable {
-        case didTapRow
-    }
-}
-
 // MARK: - Preview
 
-struct CityRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        let store = Store(
-            initialState: CityRowFeature.State(city: .init(id: 0, countryId: 0, name: "London", serversAvailable: 2))
-        ) { CityRowFeature() }
-
-        return CityRowView(store: store)
-    }
+#Preview {
+    CityRowView(
+        store: .init(initialState: .init(city: .init(id: 0, countryId: 0, name: "London", serversAvailable: 2)))
+        { CityRowFeature() }
+    )
 }

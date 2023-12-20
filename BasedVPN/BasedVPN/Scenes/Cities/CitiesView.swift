@@ -16,30 +16,32 @@ struct CitiesView: View {
     @SwiftUI.State private var isToastPresenting = false
 
     var body: some View {
-        WithViewStore(
-            store.scope(
-                state: \.view,
-                action: { (viewAction: CitiesView.Action) in
-                    viewAction.feature
+        WithViewStore(store, observe: { $0 }) { viewStore in
+            VStack {
+                switch viewStore.viewState {
+                case .loading:
+                    ProgressView()
+                        .onAppear {
+                            viewStore.send(.fetchCities)
+                        }
+                case let .loaded(rowsState):
+                    if rowsState.isEmpty {
+                        ErrorStateView(type: .empty)
+                    } else {
+                        listView(for: rowsState)
+                            .refreshable {
+                                await viewStore.send(.fetchCities, while: \.isLoading)
+                            }
+                    }
+                case let .failed(error):
+                    ErrorStateView(type: .error(retry: { viewStore.send(.fetchCities) }))
+                        .onAppear { isToastPresenting = true }
+                        .toast(message: error.localizedDescription, isShowing: $isToastPresenting, type: .error)
                 }
-            ),
-            observe: { $0 },
-            content: content
-        )
-    }
-}
-
-// MARK: - State & Action
-
-extension CitiesView {
-    struct State: Equatable {
-        let viewState: ViewState<IdentifiedArrayOf<CityRowFeature.State>, CountryError>
-        let isLoading: Bool
-        let countryName: String
-    }
-
-    enum Action: Equatable {
-        case refresh
+            }
+            .navigationTitle(viewStore.country.name)
+            .navigationBarTitleDisplayMode(.inline)
+        }
     }
 }
 
@@ -47,63 +49,24 @@ extension CitiesView {
 
 private extension CitiesView {
     @ViewBuilder
-    func content(for viewStore: ViewStore<CitiesView.State, CitiesView.Action>) -> some View {
-        VStack {
-            switch viewStore.viewState {
-            case .loading:
-                ProgressView()
-                    .onAppear {
-                        viewStore.send(.refresh)
-                    }
-            case .loaded:
-                listView(for: viewStore)
-            case let .failed(error):
-                ErrorStateView(type: .error(retry: { viewStore.send(.refresh) }))
-                    .onAppear { isToastPresenting = true }
-                    .toast(message: error.localizedDescription, isShowing: $isToastPresenting, type: .error)
+    private func listView(for rowState: IdentifiedArrayOf<CityRowFeature.State>) -> some View {
+        VStack(spacing: 0) {
+            Divider()
+            List {
+                ForEachStore(store.scope(state: { _ in rowState }, action: CitiesFeature.Action.row))
+                { CityRowView(store: $0) }
             }
-        }
-        .navigationTitle(viewStore.countryName)
-    }
-
-    @ViewBuilder
-    func listView(for viewStore: ViewStore<CitiesView.State, CitiesView.Action>) -> some View {
-        if case let ViewState.loaded(rowsState) = viewStore.viewState, !rowsState.isEmpty {
-            VStack(spacing: 0) {
-                Divider()
-                List {
-                    ForEachStore(
-                        store.scope(
-                            state: { _ in rowsState },
-                            action: CitiesFeature.Action.row
-                        )
-                    ) { rowStore in
-                        CityRowView(store: rowStore)
-                    }
-                }
-                .listStyle(.plain)
-                .refreshable {
-                    await viewStore.send(.refresh, while: \.isLoading)
-                }
-            }
-        } else {
-            ErrorStateView(type: .empty)
+            .listStyle(.plain)
         }
     }
 }
 
 // MARK: - Preview
 
-struct CitiesView_Previews: PreviewProvider {
-    static var previews: some View {
-        let store = Store(
-            initialState: CitiesFeature.State(
-                country: .init(id: 0, name: "United Kingdom", code: "GB", serversAvailable: 2)
-            )
+#Preview {
+    CitiesView(
+        store: .init(
+            initialState: .init(country: .init(id: 242, name: "United Kingdom", code: "GB", serversAvailable: 2))
         ) { CitiesFeature() }
-
-
-        return CitiesView(store: store)
-    }
+    )
 }
-

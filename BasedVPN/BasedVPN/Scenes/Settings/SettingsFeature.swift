@@ -25,7 +25,7 @@ extension SettingsFeature: Reducer {
             switch action {
             case let .changed(server):
                 state.server = server
-                generalSettingsStorage.selectedDNS = state.server
+                generalSettingsStorage.selectedDNS = server
             }
             return .none
         }

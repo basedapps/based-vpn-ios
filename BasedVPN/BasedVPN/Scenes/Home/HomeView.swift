@@ -11,7 +11,7 @@ import MapKit
 // MARK: - HomeView
 
 struct HomeView: View {
-    typealias HomeViewStore = ViewStore<HomeView.State, HomeView.Action>
+    typealias HomeViewStore = ViewStore<HomeFeature.State, HomeFeature.Action>
     let store: StoreOf<HomeFeature>
 
     @SwiftUI.State private var isToastPresenting = false
@@ -19,22 +19,17 @@ struct HomeView: View {
     init(store: StoreOf<HomeFeature>) {
         self.store = store
         store.send(.loaded)
-//        store.send()
     }
 
     var body: some View {
-        WithViewStore(
-            store.scope(
-                state: \.view,
-                action: { (viewAction: Action) in
-                    viewAction.feature
-                }
-            ),
-            observe: { $0 }
-        ) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             ZStack {
-                MapView(coordinate: viewStore.binding(get: { $0.location }, send: HomeView.Action.dismissable))
-                    .disabled(true)
+                MapView(
+                    coordinate: viewStore.binding(
+                        get: { .coordinate(latitude: $0.location?.latitude, longitude: $0.location?.longitude) },
+                        send: .dismissable)
+                )
+                .disabled(true)
                 contentView(for: viewStore)
             }
             .onAppear { viewStore.send(.onAppear) }
@@ -73,36 +68,6 @@ struct HomeView: View {
     }
 }
 
-// MARK: - State & Action
-
-extension HomeView {
-    struct State: Equatable {
-        var ip: String?
-        var location: CLLocationCoordinate2D?
-
-        var selectedCity: City?
-
-        var isConnected: Bool
-        var isLoading: Bool
-        
-        var error: String
-    }
-
-    enum Action: Equatable {
-        case onAppear
-
-        case didTapCountries
-        case didTapSettings
-
-        case didTapConnect
-
-        case didShowError
-
-        case dismissable
-    }
-}
-
-
 // MARK: - Home view decomposition
 
 private extension HomeView {
@@ -136,7 +101,7 @@ private extension HomeView {
                 .frame(maxWidth: .infinity)
                 .padding(.horizontal, 50)
 
-            Button(action: { viewStore.send(.didTapSettings) }) {
+            Button(action: { viewStore.send(.showSettings) }) {
                 Image(systemName: "gearshape.fill")
                     .resizable()
                     .frame(width: 24, height: 24)
@@ -157,7 +122,7 @@ private extension HomeView {
         VStack(spacing: 0) {
             Connection.ip.asText
                 .applyTextStyle(.systemGray(ofSize: 11, weight: .bold))
-            (viewStore.ip ?? "")
+            (viewStore.location?.ip ?? "")
                 .asText
                 .applyTextStyle(.black(ofSize: 17, weight: .bold))
         }
@@ -185,7 +150,7 @@ private extension HomeView {
 
     @ViewBuilder
     func connectView(for viewStore: HomeViewStore) -> some View {
-        Button(action: { viewStore.send(.didTapConnect) }) {
+        Button(action: { viewStore.send(.toggleConnection) }) {
             HStack {
                 if viewStore.isConnected {
                     Buttons.disconnect.asText.applyTextStyle(.black(ofSize: 17, weight: .bold))
@@ -205,7 +170,7 @@ private extension HomeView {
 
     @ViewBuilder
     func cityView(for viewStore: HomeViewStore) -> some View {
-        Button(action: { viewStore.send(.didTapCountries) }) {
+        Button(action: { viewStore.send(.showCountries) }) {
             HStack(spacing: 0) {
                 if let city = viewStore.selectedCity {
                     FlagResolver.getImage(for: city.country?.code)
@@ -243,10 +208,6 @@ private extension HomeView {
 
 // MARK: - Preview
 
-struct HomeView_Previews: PreviewProvider {
-    static var previews: some View {
-        let store = Store(initialState: HomeFeature.State()) { HomeFeature() }
-
-        return HomeView(store: store)
-    }
+#Preview {
+    HomeView(store: .init(initialState: .init()) { HomeFeature() })
 }

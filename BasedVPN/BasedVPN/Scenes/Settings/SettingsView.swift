@@ -9,52 +9,33 @@ import ComposableArchitecture
 import SwiftUI
 
 struct SettingsView: View {
+    typealias SettingsStore = ViewStore<SettingsFeature.State, SettingsFeature.Action>
     let store: StoreOf<SettingsFeature>
 
     @SwiftUI.State private var focusedTag: Int?
     
     var body: some View {
-        WithViewStore(
-            self.store,
-            observe: \.view,
-            send: { (viewAction: Action) in viewAction.feature }
-        ) { viewStore in
+        WithViewStore(store, observe: { $0 }) { viewStore in
             VStack {
                 DisclosureGroupSectionItem(
                     title: L10n.Settings.Dns.title,
                     cases: DNSServerType.allCases,
-                    selection: viewStore.binding(get: \.server, send: SettingsView.Action.didSelect),
-                    isExpanded: .init(
-                        get: { focusedTag == 0 },
-                        set: { value in focusedTag = value ? 0 : nil }
-                    )
+                    selection: viewStore.binding(get: \.server, send: { .changed($0) }),
+                    isExpanded: .init(get: { focusedTag == 0 }, set: { value in focusedTag = value ? 0 : nil })
                 )
                 .padding(.horizontal)
+                
                 Divider()
                 Spacer()
             }
             .navigationTitle(L10n.Settings.navigation)
+            .navigationBarTitleDisplayMode(.inline)
         }
-    }
-}
-
-// MARK: - State & Action
-
-extension SettingsView {
-    struct State: Equatable {
-        var server: DNSServerType
-    }
-
-    enum Action: Equatable {
-        case didSelect(DNSServerType)
     }
 }
 
 // MARK: - Preview
 
-struct SettingsView_Previews: PreviewProvider {
-    static var previews: some View {
-        let store = Store(initialState: SettingsFeature.State(server: .cloudflare)) { SettingsFeature() }
-        return SettingsView(store: store)
-    }
+#Preview {
+    SettingsView(store: .init(initialState: .init(server: .cloudflare)) { SettingsFeature() })
 }

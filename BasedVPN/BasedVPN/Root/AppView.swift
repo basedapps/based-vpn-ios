@@ -1,6 +1,6 @@
 //
 //  AppView.swift
-//  BagimsizVPN
+//  BasedVPN
 //
 //  Created Lika Vorobeva on 18.07.2023.
 
@@ -40,7 +40,7 @@ extension AppView {
                     )
                 )
             }
-            .accentColor(Colors.white.asColor)
+            .accentColor(Colors.accentBlue.asColor)
             .onAppear { UINavigationBarAppearance().applyStyle() }
             .onReceive(NotificationCenter.default.publisher(for: .banned).receive(on: DispatchQueue.main)) { notification in
                 viewStore.send(.deviceBanned)
